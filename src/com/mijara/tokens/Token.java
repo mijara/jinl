@@ -1,5 +1,11 @@
 package com.mijara.tokens;
 
+/**
+ * A token is the minimal piece of data that the parser needs to understand
+ * the source code.
+ *
+ * @author mijara
+ */
 public class Token
 {
     // Numeric.
@@ -9,27 +15,68 @@ public class Token
 
     // Special naming.
     public static final int FUNCTION_NAME = 259;
-    public static final int COMPLEXTYPE_NAME = 260;
+    public static final int STRUCT_NAME = 260;
 
     // Keywords.
-    public static final int KW_END = 261;
-
+    public static final int END = 261;
     public static final int ID = 262;
 
     private int tag;
 
+    /**
+     * Constructs a default token, used primarily for static tokens.
+     *
+     * @param tag the tag of the token.
+     */
     public Token(int tag)
     {
         this.tag = tag;
     }
 
+    /**
+     * @return the token tag
+     */
     public int getTag()
     {
         return tag;
     }
 
+    /**
+     * @return this token as an ID.
+     */
+    public IdToken toId()
+    {
+        return (IdToken) this;
+    }
+
+    /**
+     * Checks if this token is of some specific type.
+     *
+     * @param tag the tag to compare
+     * @return true if the tokens are of the same type
+     */
     public boolean is(int tag)
     {
         return this.tag == tag;
+    }
+
+    /**
+     * Checks that the tokens have the same value, but, more complex tokens
+     * should override this in order to check that the content of the token
+     * (if any) are equal.
+     *
+     * @param obj the other object
+     * @return true if the tokens are equal in type and value
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Token)) {
+            return false;
+        }
+
+        Token other = (Token) obj;
+
+        return other.getTag() == getTag();
     }
 }
