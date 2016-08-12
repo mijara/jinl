@@ -35,14 +35,14 @@ public class PhaseParser implements Parser
     /**
      * function : FUNCTION_NAME '(' [ ID ';'] parameterList ')' [ ':' typeName]
      *                  block
-     *            KW_END
+     *            END
      *
      * @return the AST node.
      * @throws EndOfInputException
      */
     private FunctionAST parseFunction() throws EndOfInputException
     {
-        String name = "Test";
+        String name = token.toFunctionName().getValue();
 
         nextToken();
 
@@ -64,18 +64,18 @@ public class PhaseParser implements Parser
         expect(')');
         nextToken();
 
-        expect(Token.KW_END);
+        expect(Token.END);
 
         return new FunctionAST(name, parameters);
     }
 
     private ParameterAST parseParameter() throws EndOfInputException
     {
-        String type = "type";
+        String type = token.toId().getValue();
         nextToken();
 
         expect(Token.ID);
-        String name = "name";
+        String name = token.toId().getValue();
         nextToken();
 
         return new ParameterAST(type, name);

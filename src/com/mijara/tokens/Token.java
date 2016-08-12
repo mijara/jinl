@@ -21,6 +21,8 @@ public class Token
     public static final int END = 261;
     public static final int ID = 262;
 
+    public static final Token endToken = new Token(END);
+
     private int tag;
 
     /**
@@ -50,6 +52,14 @@ public class Token
     }
 
     /**
+     * @return this token as an ID.
+     */
+    public FunctionNameToken toFunctionName()
+    {
+        return (FunctionNameToken) this;
+    }
+
+    /**
      * Checks if this token is of some specific type.
      *
      * @param tag the tag to compare
@@ -75,8 +85,6 @@ public class Token
             return false;
         }
 
-        Token other = (Token) obj;
-
-        return other.getTag() == getTag();
+        return ((Token) obj).getTag() == getTag();
     }
 }

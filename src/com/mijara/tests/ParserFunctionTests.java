@@ -4,12 +4,13 @@ import com.mijara.lexer.EndOfInputException;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parse.Parser;
 import com.mijara.parse.PhaseParser;
+import com.mijara.tokens.FunctionNameToken;
+import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
 import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
 
 public class ParserFunctionTests
 {
@@ -17,11 +18,11 @@ public class ParserFunctionTests
     public void testSimpleFunction()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(new Token(Token.FUNCTION_NAME), new Token('('), new Token(')'));
-        lexer.add(new Token(Token.KW_END));
+        lexer.add(new FunctionNameToken("Main"), new Token('('), new Token(')'));
+        lexer.add(Token.endToken);
 
         Parser parser = new PhaseParser(lexer);
-        parser.setVisitorCallee(node -> Assert.assertEquals(node.getName(), "Test"));
+        parser.setVisitorCallee(node -> Assert.assertEquals(node.getName(), "Main"));
 
         try {
             parser.parse();
@@ -32,10 +33,10 @@ public class ParserFunctionTests
     public void testSimpleFunctionWithParams()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(new Token(Token.FUNCTION_NAME), new Token('('));
-        lexer.add(new Token(Token.ID), new Token(Token.ID));
+        lexer.add(new FunctionNameToken("Main"), new Token('('));
+        lexer.add(new IdToken("int"), new IdToken("variable"));
         lexer.add(new Token(')'));
-        lexer.add(new Token(Token.KW_END));
+        lexer.add(Token.endToken);
 
         Parser parser = new PhaseParser(lexer);
         parser.setVisitorCallee(node -> Assert.assertThat(node.getParameters().size(), is(1)));
