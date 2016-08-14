@@ -7,6 +7,7 @@ import com.mijara.parse.PhaseParser;
 import com.mijara.tokens.FunctionNameToken;
 import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
+import com.mijara.types.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +27,9 @@ public class ParserFunctionTests
 
         try {
             parser.parse();
-        } catch (EndOfInputException ignored) {}
+        } catch (EndOfInputException ignored) {
+            System.out.println("Program read successfully.");
+        }
     }
 
     @Test
@@ -43,6 +46,29 @@ public class ParserFunctionTests
 
         try {
             parser.parse();
-        } catch (EndOfInputException ignored) {}
+        } catch (EndOfInputException ignored) {
+            System.out.println("Program read successfully.");
+        }
+    }
+
+    @Test
+    public void testSimpleFunctionWithParamsNonVoid()
+    {
+        FakeLexer lexer = new FakeLexer();
+        lexer.add(new FunctionNameToken("Main"), new Token('('));
+        lexer.add(new IdToken("int"), new IdToken("variable"));
+        lexer.add(new Token(')'));
+        lexer.add(new Token(':'));
+        lexer.add(new IdToken("float"));
+        lexer.add(Token.endToken);
+
+        Parser parser = new PhaseParser(lexer);
+        parser.setVisitorCallee(node -> Assert.assertThat(node.getReturnType(), is(Type.getFloatType())));
+
+        try {
+            parser.parse();
+        } catch (EndOfInputException ignored) {
+            System.out.println("Program read successfully.");
+        }
     }
 }

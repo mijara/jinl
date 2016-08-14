@@ -5,6 +5,7 @@ import com.mijara.ast.ParameterAST;
 import com.mijara.lexer.EndOfInputException;
 import com.mijara.lexer.Lexer;
 import com.mijara.tokens.Token;
+import com.mijara.types.Type;
 
 import java.util.ArrayList;
 
@@ -18,18 +19,24 @@ public class PhaseParser implements Parser
     public PhaseParser(Lexer lexer)
     {
         this.lexer = lexer;
+
+        try {
+            nextToken();
+        } catch (EndOfInputException e) {
+            throw new RuntimeException("Invalid state!");
+        }
     }
 
     @Override
     public void parse() throws EndOfInputException
     {
-        nextToken();
-
         switch (token.getTag()) {
             case Token.FUNCTION_NAME:
                 visitorCallee.visit(parseFunction());
                 break;
         }
+
+        parse();
     }
 
     /**
@@ -46,7 +53,7 @@ public class PhaseParser implements Parser
 
         nextToken();
 
-        expect('(');
+        assertToken('(');
 
         // eat '('
         nextToken();
@@ -57,31 +64,49 @@ public class PhaseParser implements Parser
             parameters.add(parseParameter());
 
             if (token.is(',')) {
+                // eat ','
                 nextToken();
             }
         }
 
-        expect(')');
+        assertToken(')');
+        // eat ')'
         nextToken();
 
-        expect(Token.END);
+        Type returnType = null;
+        if (token.is(':')) {
+            // eat ':'
+            nextToken();
 
-        return new FunctionAST(name, parameters);
+            assertToken(Token.ID);
+            returnType = Type.fromString(token.toId().getValue());
+
+            // eat type.
+            nextToken();
+        }
+
+        assertToken(Token.END);
+        nextToken(); // eat END.
+
+        return new FunctionAST(name, parameters, returnType);
     }
 
     private ParameterAST parseParameter() throws EndOfInputException
     {
-        String type = token.toId().getValue();
+        Type type = Type.fromString(token.toId().getValue());
+        // eat type.
         nextToken();
 
-        expect(Token.ID);
+        assertToken(Token.ID);
         String name = token.toId().getValue();
+
+        // eat name.
         nextToken();
 
         return new ParameterAST(type, name);
     }
 
-    private void expect(int tokenTag) throws EndOfInputException
+    private void assertToken(int tokenTag) throws EndOfInputException
     {
         if (!token.is(tokenTag)) {
             throw TokenNotExpectedException.build(token, tokenTag);
