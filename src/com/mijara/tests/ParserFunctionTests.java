@@ -1,9 +1,12 @@
 package com.mijara.tests;
 
+import com.mijara.ast.FunctionAST;
+import com.mijara.ast.VarDeclAST;
 import com.mijara.lexer.EndOfInputException;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parse.Parser;
 import com.mijara.parse.PhaseParser;
+import com.mijara.parse.VisitorCallee;
 import com.mijara.tokens.FunctionNameToken;
 import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
@@ -23,12 +26,22 @@ public class ParserFunctionTests
         lexer.add(Token.endToken);
 
         Parser parser = new PhaseParser(lexer);
-        parser.setVisitorCallee(node -> Assert.assertEquals(node.getName(), "Main"));
+        parser.setVisitorCallee(new VisitorCallee()
+        {
+            @Override
+            public void visit(FunctionAST node)
+            {
+                Assert.assertEquals(node.getName(), "Main");
+            }
+
+            @Override
+            public void visit(VarDeclAST node) {}
+        });
 
         try {
             parser.parse();
         } catch (EndOfInputException ignored) {
-            System.out.println("Program read successfully.");
+
         }
     }
 
@@ -42,12 +55,25 @@ public class ParserFunctionTests
         lexer.add(Token.endToken);
 
         Parser parser = new PhaseParser(lexer);
-        parser.setVisitorCallee(node -> Assert.assertThat(node.getParameters().size(), is(1)));
+        parser.setVisitorCallee(new VisitorCallee()
+        {
+            @Override
+            public void visit(FunctionAST node)
+            {
+                Assert.assertThat(node.getParameters().size(), is(1));
+            }
+
+            @Override
+            public void visit(VarDeclAST node)
+            {
+
+            }
+        });
 
         try {
             parser.parse();
         } catch (EndOfInputException ignored) {
-            System.out.println("Program read successfully.");
+
         }
     }
 
@@ -63,12 +89,25 @@ public class ParserFunctionTests
         lexer.add(Token.endToken);
 
         Parser parser = new PhaseParser(lexer);
-        parser.setVisitorCallee(node -> Assert.assertThat(node.getReturnType(), is(Type.getFloatType())));
+        parser.setVisitorCallee(new VisitorCallee()
+        {
+            @Override
+            public void visit(FunctionAST node)
+            {
+                Assert.assertThat(node.getReturnType(), is(Type.getFloatType()));
+            }
+
+            @Override
+            public void visit(VarDeclAST node)
+            {
+
+            }
+        });
 
         try {
             parser.parse();
         } catch (EndOfInputException ignored) {
-            System.out.println("Program read successfully.");
+
         }
     }
 }

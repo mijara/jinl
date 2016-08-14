@@ -1,6 +1,7 @@
 package com.mijara.parse;
 
 import com.mijara.ast.FunctionAST;
+import com.mijara.ast.VarDeclAST;
 
 /**
  * The pass callee is a callback used by the parser at certain
@@ -11,4 +12,6 @@ import com.mijara.ast.FunctionAST;
 public interface VisitorCallee
 {
     void visit(FunctionAST node);
+
+    void visit(VarDeclAST node);
 }

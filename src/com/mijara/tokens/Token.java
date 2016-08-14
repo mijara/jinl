@@ -20,8 +20,10 @@ public class Token
     // Keywords.
     public static final int END = 261;
     public static final int ID = 262;
+    public static final int VAR = 263;
 
     public static final Token endToken = new Token(END);
+    public static final Token varToken = new Token(VAR);
 
     private int tag;
 

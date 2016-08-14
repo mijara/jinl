@@ -1,5 +1,6 @@
 package com.mijara.lexer;
 
+import com.mijara.tokens.FunctionNameToken;
 import com.mijara.tokens.Token;
 
 import java.util.ArrayList;
@@ -29,5 +30,18 @@ public class FakeLexer implements Lexer
         }
 
         return tokens.get(i++);
+    }
+
+    public static class Builder
+    {
+        public static Lexer mainFunction(Token... block)
+        {
+            FakeLexer lexer = new FakeLexer();
+            lexer.add(new FunctionNameToken("Main"), new Token('('), new Token(')'));
+            lexer.add(block);
+            lexer.add(Token.endToken);
+
+            return lexer;
+        }
     }
 }
