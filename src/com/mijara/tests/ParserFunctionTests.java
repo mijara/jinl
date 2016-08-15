@@ -71,12 +71,12 @@ public class ParserFunctionTests
     public void testSimpleFunctionWithParamsNonVoid()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(new FunctionNameToken("Main"), new Token('('));
-        lexer.add(new IdToken("int"), new IdToken("variable"));
-        lexer.add(new Token(')'));
-        lexer.add(new Token(':'));
-        lexer.add(new IdToken("float"));
-        lexer.add(Token.endToken);
+        lexer.add(FakeLexer.Builder.function("Main",
+                FakeLexer.Builder.parameters(
+                        FakeLexer.Builder.param(Type.getIntType(), "someVar")
+                ),
+                Type.getFloatType()
+        ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
 

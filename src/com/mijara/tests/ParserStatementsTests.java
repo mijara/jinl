@@ -22,9 +22,10 @@ public class ParserStatementsTests
     @Test
     public void testEmptyVarDecl()
     {
-        Lexer lexer = FakeLexer.Builder.mainFunction(
+        FakeLexer lexer = new FakeLexer();
+        lexer.add(FakeLexer.Builder.mainFunction(
                 FakeLexer.Builder.varDecl("someVar", Type.getFloatType())
-        );
+        ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
 
