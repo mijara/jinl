@@ -5,6 +5,7 @@ import com.mijara.engine.Program;
 import com.mijara.lexer.Lexer;
 import com.mijara.tokens.Token;
 import com.mijara.types.Type;
+import com.mijara.utils.Validate;
 
 import java.util.ArrayList;
 
@@ -27,8 +28,8 @@ public class RecursiveDescentParser implements Parser
 
     public RecursiveDescentParser(Lexer lexer, Program program)
     {
-        this.lexer = lexer;
-        this.program = program;
+        this.lexer = Validate.notNull(lexer);
+        this.program = Validate.notNull(program);
 
         nextToken();
     }
