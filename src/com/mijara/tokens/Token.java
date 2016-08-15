@@ -22,6 +22,8 @@ public class Token
     public static final int ID = 262;
     public static final int VAR = 263;
 
+    public static final int EOC = 999;
+
     public static final Token endToken = new Token(END);
     public static final Token varToken = new Token(VAR);
 

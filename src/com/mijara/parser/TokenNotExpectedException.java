@@ -1,4 +1,4 @@
-package com.mijara.parse;
+package com.mijara.parser;
 
 import com.mijara.tokens.Token;
 

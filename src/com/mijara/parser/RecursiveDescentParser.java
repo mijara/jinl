@@ -1,6 +1,7 @@
-package com.mijara.parse;
+package com.mijara.parser;
 
 import com.mijara.ast.*;
+import com.mijara.engine.Program;
 import com.mijara.lexer.EndOfInputException;
 import com.mijara.lexer.Lexer;
 import com.mijara.tokens.Token;
@@ -8,16 +9,27 @@ import com.mijara.types.Type;
 
 import java.util.ArrayList;
 
-public class PhaseParser implements Parser
+public class RecursiveDescentParser implements Parser
 {
-    private VisitorCallee visitorCallee;
+    /**
+     * Some lexer implementation.
+     */
     private Lexer lexer;
 
+    /**
+     * Current token.
+     */
     private Token token;
 
-    public PhaseParser(Lexer lexer)
+    /**
+     * Used to store AST and metadata.
+     */
+    private Program program;
+
+    public RecursiveDescentParser(Lexer lexer, Program program)
     {
         this.lexer = lexer;
+        this.program = program;
 
         try {
             nextToken();
@@ -32,11 +44,14 @@ public class PhaseParser implements Parser
         while (true) {
             switch (token.getTag()) {
                 case Token.FUNCTION_NAME:
-                    visitorCallee.visit(parseFunction());
+                    program.addFunction(parseFunction());
                     continue;
 
+                case Token.EOC:
+                    throw new EndOfInputException();
+
                 default:
-                    return;
+                    throw new ParserError("Unexpected token received: " + token.getTag());
             }
         }
     }
@@ -60,7 +75,7 @@ public class PhaseParser implements Parser
         // eat '('
         nextToken();
 
-        // parse parameterList.
+        // parser parameterList.
         ArrayList<ParameterAST> parameters = new ArrayList<>();
         while (token.is(Token.ID)) {
             parameters.add(parseParameter());
@@ -76,30 +91,28 @@ public class PhaseParser implements Parser
 
         Type returnType = parseSmartType();
 
-        // parse block.
-        parseBlock();
+        // parser block.
+        BlockAST block = parseBlock();
 
         // function end.
         assertToken(Token.END);
         nextToken(); // eat END.
 
-        return new FunctionAST(name, parameters, returnType);
+        return new FunctionAST(name, parameters, returnType, block);
     }
 
-    private void parseBlock() throws EndOfInputException
+    private BlockAST parseBlock() throws EndOfInputException
     {
         BlockAST block = new BlockAST();
 
         while (true) {
             switch (token.getTag()) {
                 case Token.VAR:
-                    VarDeclAST node = parseVarDecl();
-                    block.addStatement(node);
-                    visitorCallee.visit(node);
+                    block.addStatement(parseVarDecl());
                     continue;
 
                 default:
-                    return;
+                    return block;
             }
         }
     }
@@ -170,8 +183,9 @@ public class PhaseParser implements Parser
         token = lexer.getNext();
     }
 
-    public void setVisitorCallee(VisitorCallee visitorCallee)
+    @Override
+    public Program getProgram()
     {
-        this.visitorCallee = visitorCallee;
+        return program;
     }
 }

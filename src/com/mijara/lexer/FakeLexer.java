@@ -1,7 +1,10 @@
 package com.mijara.lexer;
 
+import com.mijara.ast.VarDeclAST;
 import com.mijara.tokens.FunctionNameToken;
+import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
+import com.mijara.types.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +28,12 @@ public class FakeLexer implements Lexer
     @Override
     public Token getNext() throws EndOfInputException
     {
-        if (i >= tokens.size()) {
+        if (i > tokens.size()) {
             throw new EndOfInputException();
+        }
+
+        if (i == tokens.size()) {
+            return new Token(Token.EOC);
         }
 
         return tokens.get(i++);
@@ -42,6 +49,16 @@ public class FakeLexer implements Lexer
             lexer.add(Token.endToken);
 
             return lexer;
+        }
+
+        public static Token[] varDecl(String name, Type type)
+        {
+            return new Token[]{
+                    Token.varToken,
+                    new IdToken(name),
+                    new Token(':'),
+                    new IdToken(type.toString())
+            };
         }
     }
 }
