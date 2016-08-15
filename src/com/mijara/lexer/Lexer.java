@@ -13,7 +13,6 @@ public interface Lexer
      * Gets the next token from the stream.
      *
      * @return the next token.
-     * @throws EndOfInputException
      */
-    Token getNext() throws EndOfInputException;
+    Token getNext();
 }

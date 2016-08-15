@@ -1,7 +1,6 @@
 package com.mijara.parser;
 
 import com.mijara.engine.Program;
-import com.mijara.lexer.EndOfInputException;
 
 /**
  * Part of the parsing pipeline.
@@ -13,7 +12,7 @@ public interface Parser
     /**
      * Parse the input code.
      */
-    void parse() throws EndOfInputException;
+    void parse();
 
     /**
      * A parser should produce a {@link Program}.

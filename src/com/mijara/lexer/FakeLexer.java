@@ -1,6 +1,5 @@
 package com.mijara.lexer;
 
-import com.mijara.ast.VarDeclAST;
 import com.mijara.tokens.FunctionNameToken;
 import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
@@ -32,14 +31,10 @@ public class FakeLexer implements Lexer
     }
 
     @Override
-    public Token getNext() throws EndOfInputException
+    public Token getNext()
     {
-        if (i > tokens.size()) {
-            throw new EndOfInputException();
-        }
-
         if (i == tokens.size()) {
-            return new Token(Token.EOC);
+            return new Token(Token.EOF);
         }
 
         return tokens.get(i++);

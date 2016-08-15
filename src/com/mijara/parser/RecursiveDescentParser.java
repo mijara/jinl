@@ -2,7 +2,6 @@ package com.mijara.parser;
 
 import com.mijara.ast.*;
 import com.mijara.engine.Program;
-import com.mijara.lexer.EndOfInputException;
 import com.mijara.lexer.Lexer;
 import com.mijara.tokens.Token;
 import com.mijara.types.Type;
@@ -31,15 +30,11 @@ public class RecursiveDescentParser implements Parser
         this.lexer = lexer;
         this.program = program;
 
-        try {
-            nextToken();
-        } catch (EndOfInputException e) {
-            throw new RuntimeException("Invalid state!");
-        }
+        nextToken();
     }
 
     @Override
-    public void parse() throws EndOfInputException
+    public void parse()
     {
         while (true) {
             switch (token.getTag()) {
@@ -47,8 +42,8 @@ public class RecursiveDescentParser implements Parser
                     program.addFunction(parseFunction());
                     continue;
 
-                case Token.EOC:
-                    throw new EndOfInputException();
+                case Token.EOF:
+                    return;
 
                 default:
                     throw new ParserError("Unexpected token received: " + token.getTag());
@@ -64,7 +59,7 @@ public class RecursiveDescentParser implements Parser
      * @return the AST node.
      * @throws EndOfInputException
      */
-    private FunctionAST parseFunction() throws EndOfInputException
+    private FunctionAST parseFunction()
     {
         String name = token.toFunctionName().getValue();
 
@@ -101,7 +96,7 @@ public class RecursiveDescentParser implements Parser
         return new FunctionAST(name, parameters, returnType, block);
     }
 
-    private BlockAST parseBlock() throws EndOfInputException
+    private BlockAST parseBlock()
     {
         BlockAST block = new BlockAST();
 
@@ -120,7 +115,7 @@ public class RecursiveDescentParser implements Parser
     /**
      * varDecl : VAR ID ':' typeName
      */
-    private VarDeclAST parseVarDecl() throws EndOfInputException
+    private VarDeclAST parseVarDecl()
     {
         assertToken(Token.VAR);
         nextToken(); // eat VAR.
@@ -143,7 +138,7 @@ public class RecursiveDescentParser implements Parser
      *
      * @return the type or null.
      */
-    private Type parseSmartType() throws EndOfInputException
+    private Type parseSmartType()
     {
         if (token.is(':')) {
             nextToken(); // eat ':'
@@ -158,7 +153,7 @@ public class RecursiveDescentParser implements Parser
         return null;
     }
 
-    private ParameterAST parseParameter() throws EndOfInputException
+    private ParameterAST parseParameter()
     {
         assertToken(Token.ID);
         Type type = Type.fromString(token.toId().getValue());
@@ -171,14 +166,14 @@ public class RecursiveDescentParser implements Parser
         return new ParameterAST(type, name);
     }
 
-    private void assertToken(int tokenTag) throws EndOfInputException
+    private void assertToken(int tokenTag)
     {
         if (!token.is(tokenTag)) {
             throw TokenNotExpectedException.build(token, tokenTag);
         }
     }
 
-    private void nextToken() throws EndOfInputException
+    private void nextToken()
     {
         token = lexer.getNext();
     }
