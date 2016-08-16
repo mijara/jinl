@@ -1,5 +1,6 @@
 package com.mijara.tests;
 
+import com.mijara.ast.IntegerAST;
 import com.mijara.ast.VarDeclAST;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
@@ -10,12 +11,14 @@ import com.mijara.types.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.hamcrest.core.Is.is;
 
-public class ParserStatementsTests
+public class ParserVarDeclsTests
 {
     @Test
-    public void testEmptyVarDecl()
+    public void testEmpty()
     {
         FakeLexer lexer = new FakeLexer();
         lexer.add(FakeLexer.Builder.mainFunction(
@@ -31,5 +34,30 @@ public class ParserStatementsTests
         VarDeclAST varDecl = (VarDeclAST) explorer.function("Main").entry().first();
         Assert.assertThat(varDecl.getName(), is("someVar"));
         Assert.assertThat(varDecl.getType(), is(Type.getFloatType()));
+    }
+
+    @Test
+    public void testWithInitial()
+    {
+        int number = (int) (Math.random() * Integer.MAX_VALUE);
+
+        FakeLexer lexer = new FakeLexer();
+        lexer.add(FakeLexer.Builder.mainFunction(
+                FakeLexer.Builder.varDecl("someVar", Type.getFloatType(),
+                        FakeLexer.Builder.integer(number)
+                )
+        ));
+
+        Parser parser = new RecursiveDescentParser(lexer, new Program());
+
+        parser.parse();
+
+        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
+
+        VarDeclAST varDecl = (VarDeclAST) explorer.function("Main").entry().first();
+        Assert.assertNotNull(varDecl.getInitial());
+
+        IntegerAST initial = (IntegerAST) varDecl.getInitial();
+        Assert.assertEquals(initial.getValue().intValue(), number);
     }
 }

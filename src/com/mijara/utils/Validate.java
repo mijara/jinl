@@ -17,4 +17,22 @@ public class Validate
 
         return arg;
     }
+
+    public static void notNullNorEmpty(Object[] arg)
+    {
+        Validate.notNull(arg);
+
+        if (arg.length == 0) {
+            throw new IllegalArgumentException("Array mush be of length > 0");
+        }
+    }
+
+    public static void notNullAndSizeOf(Object[] arg, int size)
+    {
+        Validate.notNull(arg);
+
+        if (arg.length == size) {
+            throw new IllegalArgumentException("Array mush be of length = " + size);
+        }
+    }
 }

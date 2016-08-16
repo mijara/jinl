@@ -5,6 +5,7 @@ import com.mijara.tokens.IdToken;
 import com.mijara.tokens.IntegerToken;
 import com.mijara.tokens.Token;
 import com.mijara.types.Type;
+import com.mijara.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -181,9 +182,30 @@ public class FakeLexer implements Lexer
             };
         }
 
-        public static Token integer(int value)
+        /**
+         * Creates a variable declaration without an initial value
+         *
+         * @param name the new variable name
+         * @param type the variable type
+         * @param initial some initial value
+         * @return the token stream
+         */
+        public static Token[] varDecl(String name, Type type, Token[] initial)
         {
-            return new IntegerToken(value);
+            ArrayList<Token> stream = new ArrayList<>();
+            stream.add(Token.varToken);
+            stream.add(new IdToken(name));
+            stream.add(new Token(':'));
+            stream.add(new IdToken(type.toString()));
+            stream.add(new Token('='));
+            Collections.addAll(stream, initial);
+
+            return stream.toArray(new Token[0]);
+        }
+
+        public static Token[] integer(int value)
+        {
+            return new Token[] { new IntegerToken(value) };
         }
     }
 }

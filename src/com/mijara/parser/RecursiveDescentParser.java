@@ -115,13 +115,6 @@ public class RecursiveDescentParser implements Parser
         }
     }
 
-    private IntegerAST parseInteger()
-    {
-        int value = token.toInt().getValue();
-        nextToken();
-        return new IntegerAST(value);
-    }
-
     /**
      * varDecl : VAR ID ':' typeName
      */
@@ -136,7 +129,31 @@ public class RecursiveDescentParser implements Parser
 
         Type type = parseSmartType();
 
-        return new VarDeclAST(name, type);
+        ExpressionAST initial = null;
+        if (token.is('=')) {
+            nextToken(); // eat '='
+
+            initial = parseExpression();
+        }
+
+        return new VarDeclAST(name, type, initial);
+    }
+
+    private ExpressionAST parseExpression()
+    {
+        switch (token.getTag()) {
+            case Token.INTEGER:
+                return parseInteger();
+        }
+
+        return null;
+    }
+
+    private IntegerAST parseInteger()
+    {
+        int value = token.toInt().getValue();
+        nextToken();
+        return new IntegerAST(value);
     }
 
     /**
