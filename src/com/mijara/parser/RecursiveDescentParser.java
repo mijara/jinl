@@ -70,7 +70,7 @@ public class RecursiveDescentParser implements Parser
         // eat '('
         nextToken();
 
-        // parser parameterList.
+        // parse parameterList.
         ArrayList<ParameterAST> parameters = new ArrayList<>();
         while (token.is(Token.ID)) {
             parameters.add(parseParameter());
@@ -106,10 +106,14 @@ public class RecursiveDescentParser implements Parser
                     block.addStatement(parseVarDecl());
                     continue;
 
-                case Token.INTEGER:
-                    block.addStatement(new ExpressionStatementAST(parseInteger()));
-
                 default:
+                    // try to parse an expression.
+                    ExpressionAST expression = parseExpression();
+                    if (expression != null) {
+                        block.addStatement(new ExpressionStatementAST(expression));
+                        continue;
+                    }
+
                     return block;
             }
         }
