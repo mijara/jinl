@@ -12,7 +12,7 @@ public class Validate
     public static <T> T notNull(T arg)
     {
         if (arg == null) {
-            throw new IllegalArgumentException("Illegal null of type %s found.");
+            throw new IllegalArgumentException("Illegal null argument found.");
         }
 
         return arg;

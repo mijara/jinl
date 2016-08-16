@@ -2,6 +2,7 @@ package com.mijara.lexer;
 
 import com.mijara.tokens.FunctionNameToken;
 import com.mijara.tokens.IdToken;
+import com.mijara.tokens.IntegerToken;
 import com.mijara.tokens.Token;
 import com.mijara.types.Type;
 
@@ -178,6 +179,11 @@ public class FakeLexer implements Lexer
                     new Token(':'),
                     new IdToken(type.toString())
             };
+        }
+
+        public static Token integer(int value)
+        {
+            return new IntegerToken(value);
         }
     }
 }

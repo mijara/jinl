@@ -57,6 +57,14 @@ public class Token
     }
 
     /**
+     * @return this token as an INTEGER.
+     */
+    public IntegerToken toInt()
+    {
+        return (IntegerToken) this;
+    }
+
+    /**
      * @return this token as an ID.
      */
     public FunctionNameToken toFunctionName()

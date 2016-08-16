@@ -5,6 +5,8 @@ package com.mijara.tokens;
  * such as ids, strings, and names.
  *
  * @author mijara
+ *
+ * TODO: should this class extend ValueToken?
  */
 public abstract class WordToken extends Token
 {

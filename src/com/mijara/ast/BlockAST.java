@@ -1,5 +1,7 @@
 package com.mijara.ast;
 
+import com.mijara.utils.Validate;
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ public class BlockAST
 
     public void addStatement(StatementAST node)
     {
-        statements.add(node);
+        statements.add(Validate.notNull(node));
     }
 
     public ArrayList<StatementAST> getStatements()

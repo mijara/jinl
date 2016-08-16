@@ -58,7 +58,6 @@ public class RecursiveDescentParser implements Parser
      * END
      *
      * @return the AST node.
-     * @throws EndOfInputException
      */
     private FunctionAST parseFunction()
     {
@@ -107,10 +106,20 @@ public class RecursiveDescentParser implements Parser
                     block.addStatement(parseVarDecl());
                     continue;
 
+                case Token.INTEGER:
+                    block.addStatement(new ExpressionStatementAST(parseInteger()));
+
                 default:
                     return block;
             }
         }
+    }
+
+    private IntegerAST parseInteger()
+    {
+        int value = token.toInt().getValue();
+        nextToken();
+        return new IntegerAST(value);
     }
 
     /**
