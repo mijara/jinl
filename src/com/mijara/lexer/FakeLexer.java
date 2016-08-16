@@ -207,5 +207,16 @@ public class FakeLexer implements Lexer
         {
             return new Token[] { new IntegerToken(value) };
         }
+
+        public static Token[] assignment(String variable, Token[] value)
+        {
+            ArrayList<Token> stream = new ArrayList<>();
+
+            stream.add(new IdToken(variable));
+            stream.add(new Token('='));
+            Collections.addAll(stream, value);
+
+            return stream.toArray(new Token[0]);
+        }
     }
 }

@@ -106,6 +106,9 @@ public class RecursiveDescentParser implements Parser
                     block.addStatement(parseVarDecl());
                     continue;
 
+                case Token.ID:
+                    block.addStatement(parseAssignment());
+
                 default:
                     // try to parse an expression.
                     ExpressionAST expression = parseExpression();
@@ -119,8 +122,25 @@ public class RecursiveDescentParser implements Parser
         }
     }
 
+    private StatementAST parseAssignment()
+    {
+        String variable = token.toId().getValue();
+        nextToken(); // eat name.
+
+        assertToken('=');
+        nextToken(); // eat '='.
+
+        ExpressionAST value = parseExpression();
+        if (value == null) {
+            throw new ParserError("Expression expected.");
+        }
+
+        return new AssignmentAST(variable, value);
+    }
+
     /**
      * varDecl : VAR ID ':' typeName
+     *         | VAR ID ':' typeName '=' expression
      */
     private VarDeclAST parseVarDecl()
     {
@@ -138,6 +158,9 @@ public class RecursiveDescentParser implements Parser
             nextToken(); // eat '='
 
             initial = parseExpression();
+            if (initial == null) {
+                throw new ParserError("Initial value expected after '='.");
+            }
         }
 
         return new VarDeclAST(name, type, initial);
