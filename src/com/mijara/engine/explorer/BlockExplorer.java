@@ -17,9 +17,8 @@ public class BlockExplorer
         return block.getStatements().get(0);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends StatementAST> T first(Class<T> clazz)
     {
-        return (T) block.getStatements().get(0);
+        return clazz.cast(block.getStatements().get(0));
     }
 }
