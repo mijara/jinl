@@ -183,7 +183,7 @@ public class FakeLexer implements Lexer
         }
 
         /**
-         * Creates a variable declaration without an initial value
+         * Creates a variable declaration with an initial value and type.
          *
          * @param name the new variable name
          * @param type the variable type
@@ -197,6 +197,24 @@ public class FakeLexer implements Lexer
             stream.add(new IdToken(name));
             stream.add(new Token(':'));
             stream.add(new IdToken(type.toString()));
+            stream.add(new Token('='));
+            Collections.addAll(stream, initial);
+
+            return stream.toArray(new Token[0]);
+        }
+
+        /**
+         * Creates a variable declaration with inferred type.
+         *
+         * @param name the new variable name
+         * @param initial some initial value
+         * @return the token stream
+         */
+        public static Token[] varDecl(String name, Token[] initial)
+        {
+            ArrayList<Token> stream = new ArrayList<>();
+            stream.add(Token.varToken);
+            stream.add(new IdToken(name));
             stream.add(new Token('='));
             Collections.addAll(stream, initial);
 

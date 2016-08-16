@@ -60,4 +60,28 @@ public class ParserVarDeclsTests
         IntegerAST initial = (IntegerAST) varDecl.getInitial();
         Assert.assertEquals(initial.getValue().intValue(), number);
     }
+
+    @Test
+    public void testWithInitialAndInference()
+    {
+        int number = (int) (Math.random() * Integer.MAX_VALUE);
+
+        FakeLexer lexer = new FakeLexer();
+        lexer.add(FakeLexer.Builder.mainFunction(
+                FakeLexer.Builder.varDecl("someVar", FakeLexer.Builder.integer(number))
+        ));
+
+        Parser parser = new RecursiveDescentParser(lexer, new Program());
+
+        parser.parse();
+
+        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
+
+        VarDeclAST varDecl = (VarDeclAST) explorer.function("Main").entry().first();
+        Assert.assertNotNull(varDecl.getInitial());
+        Assert.assertNull(varDecl.getType());
+
+        IntegerAST initial = (IntegerAST) varDecl.getInitial();
+        Assert.assertEquals(initial.getValue().intValue(), number);
+    }
 }

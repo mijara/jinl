@@ -3,6 +3,7 @@ package com.mijara.parser;
 import com.mijara.ast.*;
 import com.mijara.engine.Program;
 import com.mijara.lexer.Lexer;
+import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
 import com.mijara.types.Type;
 import com.mijara.utils.Validate;
@@ -96,6 +97,10 @@ public class RecursiveDescentParser implements Parser
         return new FunctionAST(name, parameters, returnType, block);
     }
 
+    /**
+     * block : statement block
+     *
+     */
     private BlockAST parseBlock()
     {
         BlockAST block = new BlockAST();
@@ -108,6 +113,7 @@ public class RecursiveDescentParser implements Parser
 
                 case Token.ID:
                     block.addStatement(parseAssignment());
+                    continue;
 
                 default:
                     // try to parse an expression.
@@ -130,6 +136,7 @@ public class RecursiveDescentParser implements Parser
         assertToken('=');
         nextToken(); // eat '='.
 
+        // required value expression.
         ExpressionAST value = parseExpression();
         if (value == null) {
             throw new ParserError("Expression expected.");
@@ -138,9 +145,12 @@ public class RecursiveDescentParser implements Parser
         return new AssignmentAST(variable, value);
     }
 
+
+
     /**
      * varDecl : VAR ID ':' typeName
      *         | VAR ID ':' typeName '=' expression
+     *         | VAR ID '=' expression
      */
     private VarDeclAST parseVarDecl()
     {
@@ -157,6 +167,7 @@ public class RecursiveDescentParser implements Parser
         if (token.is('=')) {
             nextToken(); // eat '='
 
+            // required initial expression.
             initial = parseExpression();
             if (initial == null) {
                 throw new ParserError("Initial value expected after '='.");
