@@ -115,6 +115,10 @@ public class RecursiveDescentParser implements Parser
                     block.addStatement(parseAssignment());
                     continue;
 
+                case Token.FUNCTION_NAME:
+                    block.addStatement(new ExpressionStatementAST(parseFunctionCall()));
+                    continue;
+
                 default:
                     // try to parse an expression.
                     ExpressionAST expression = parseExpression();
@@ -126,6 +130,26 @@ public class RecursiveDescentParser implements Parser
                     return block;
             }
         }
+    }
+
+    private ExpressionAST parseFunctionCall()
+    {
+        String name = token.toFunctionName().getValue();
+        nextToken(); // eat name.
+
+        assertToken('(');
+        nextToken(); // eat '('.
+
+        ArrayList<ExpressionAST> args = new ArrayList<>();
+        while (!token.is(')')) {
+            ExpressionAST expression = parseExpression();
+            args.add(expression);
+        }
+
+        assertToken(')');
+        nextToken(); // eat ')'.
+
+        return new FunctionCallAST(name, args);
     }
 
     private StatementAST parseAssignment()
@@ -144,8 +168,6 @@ public class RecursiveDescentParser implements Parser
 
         return new AssignmentAST(variable, value);
     }
-
-
 
     /**
      * varDecl : VAR ID ':' typeName

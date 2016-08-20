@@ -11,8 +11,6 @@ import com.mijara.types.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Random;
-
 import static org.hamcrest.core.Is.is;
 
 public class ParserVarDeclsTests

@@ -7,5 +7,8 @@ package com.mijara.ast;
  */
 public class ExpressionAST
 {
-
+    public ValueExpressionAST toValue()
+    {
+        return (ValueExpressionAST) this;
+    }
 }

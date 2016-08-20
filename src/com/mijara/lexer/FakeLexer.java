@@ -236,5 +236,30 @@ public class FakeLexer implements Lexer
 
             return stream.toArray(new Token[0]);
         }
+
+        public static Token[] functionCall(String name)
+        {
+            return new Token[] {
+                    new FunctionNameToken(name),
+                    new Token('('),
+                    new Token(')')
+            };
+        }
+
+        public static Token[] functionCall(String name, Token[]... args)
+        {
+            ArrayList<Token> stream = new ArrayList<>();
+
+            stream.add(new FunctionNameToken(name));
+            stream.add(new Token('('));
+
+            for (Token[] arg : args) {
+                Collections.addAll(stream, arg);
+            }
+
+            stream.add(new Token(')'));
+
+            return stream.toArray(new Token[0]);
+        }
     }
 }
