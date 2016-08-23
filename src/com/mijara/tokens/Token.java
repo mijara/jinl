@@ -32,6 +32,7 @@ public class Token
     public static final Token endToken = new Token(END);
     public static final Token varToken = new Token(VAR);
     public static final Token returnToken = new Token(RETURN);
+    public static final Token eofToken = new Token(EOF);
 
     private int tag;
 

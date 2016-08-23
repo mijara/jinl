@@ -215,6 +215,11 @@ public class RecursiveDescentParser implements Parser
         return new VarDeclAST(name, type, initial);
     }
 
+    /**
+     * Parse an {@link ExpressionAST}.
+     *
+     * @return the expression object or null if nothing matches.
+     */
     private ExpressionAST parseExpression()
     {
         switch (token.getTag()) {
