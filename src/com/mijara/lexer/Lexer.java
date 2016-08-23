@@ -15,4 +15,6 @@ public interface Lexer
      * @return the next token.
      */
     Token getNext();
+
+    char getPeek();
 }

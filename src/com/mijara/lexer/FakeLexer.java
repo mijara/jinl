@@ -39,6 +39,12 @@ public class FakeLexer implements Lexer
         return tokens.get(i++);
     }
 
+    @Override
+    public char getPeek()
+    {
+        return 0;
+    }
+
     /**
      * Builder for standard token streams to use along the {@link FakeLexer}.
      * <p>

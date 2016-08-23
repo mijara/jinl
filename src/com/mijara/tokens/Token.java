@@ -26,6 +26,14 @@ public class Token
     public static final int VAR = 263;
     public static final int RETURN = 264;
 
+    // Symbols.
+    public static final int EQUALS = 271;
+    public static final int NEQ = 272;
+    public static final int LEQ = 273;
+    public static final int GEQ = 274;
+    public static final int GREATER = 275;
+    public static final int LESS = 276;
+
     // Implicit lexer EOF.
     public static final int EOF = 999;
 
@@ -33,6 +41,12 @@ public class Token
     public static final Token varToken = new Token(VAR);
     public static final Token returnToken = new Token(RETURN);
     public static final Token eofToken = new Token(EOF);
+    public static final Token equalsToken = new Token(EQUALS);
+    public static final Token neqToken = new Token(NEQ);
+    public static final Token leqToken = new Token(LEQ);
+    public static final Token geqToken = new Token(GEQ);
+    public static final Token greaterToken = new Token(GREATER);
+    public static final Token lessToken = new Token(LESS);
 
     private int tag;
 
@@ -110,5 +124,11 @@ public class Token
         }
 
         return ((Token) obj).getTag() == getTag();
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf(tag);
     }
 }
