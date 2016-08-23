@@ -202,6 +202,21 @@ public class FakeLexer implements Lexer
         }
 
         /**
+         * Creates a returns statement with some expression.
+         *
+         * @param expression returned expression.
+         * @return the token stream
+         */
+        public static Token[] returnStmt(Token[] expression)
+        {
+            ArrayList<Token> stream = new ArrayList<>();
+            stream.add(Token.returnToken);
+            Collections.addAll(stream, expression);
+
+            return stream.toArray(new Token[0]);
+        }
+
+        /**
          * Creates a variable declaration with an initial value and type.
          *
          * @param name the new variable name

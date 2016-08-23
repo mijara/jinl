@@ -1,5 +1,8 @@
 package com.mijara.tokens;
 
+import com.sun.org.apache.bcel.internal.generic.RET;
+import com.sun.org.apache.regexp.internal.RE;
+
 /**
  * A token is the minimal piece of data that the parser needs to understand
  * the source code.
@@ -21,12 +24,14 @@ public class Token
     public static final int END = 261;
     public static final int ID = 262;
     public static final int VAR = 263;
+    public static final int RETURN = 264;
 
     // Implicit lexer EOF.
     public static final int EOF = 999;
 
     public static final Token endToken = new Token(END);
     public static final Token varToken = new Token(VAR);
+    public static final Token returnToken = new Token(RETURN);
 
     private int tag;
 

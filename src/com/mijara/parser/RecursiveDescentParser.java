@@ -119,6 +119,10 @@ public class RecursiveDescentParser implements Parser
                     block.addStatement(new ExpressionStatementAST(parseFunctionCall()));
                     continue;
 
+                case Token.RETURN:
+                    block.addStatement(parseReturn());
+                    continue;
+
                 default:
                     // try to parse an expression.
                     ExpressionAST expression = parseExpression();
@@ -130,6 +134,18 @@ public class RecursiveDescentParser implements Parser
                     return block;
             }
         }
+    }
+
+    private StatementAST parseReturn()
+    {
+        nextToken(); // eat RETURN.
+
+        ExpressionAST expression = parseExpression();
+        if (expression == null) {
+            throw new ParserError("Expected expression after return keyword.");
+        }
+
+        return new ReturnAST(expression);
     }
 
     private ExpressionAST parseFunctionCall()
