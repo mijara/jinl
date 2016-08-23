@@ -13,14 +13,14 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 
-public class ParserVarDeclsTests
+public class ParserVarDeclsTests extends FakeLexer.Builder
 {
     @Test
     public void testEmpty()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.varDecl("someVar", Type.getFloatType())
+        lexer.add(mainFunction(
+                varDecl("someVar", Type.getFloatType())
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
@@ -40,9 +40,9 @@ public class ParserVarDeclsTests
         int number = (int) (Math.random() * Integer.MAX_VALUE);
 
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.varDecl("someVar", Type.getFloatType(),
-                        FakeLexer.Builder.integer(number)
+        lexer.add(mainFunction(
+                varDecl("someVar", Type.getFloatType(),
+                        integer(number)
                 )
         ));
 
@@ -65,8 +65,8 @@ public class ParserVarDeclsTests
         int number = (int) (Math.random() * Integer.MAX_VALUE);
 
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.varDecl("someVar", FakeLexer.Builder.integer(number))
+        lexer.add(mainFunction(
+                varDecl("someVar", integer(number))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

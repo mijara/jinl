@@ -13,14 +13,14 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 
-public class ParserBuiltInValuesTests
+public class ParserBuiltInValuesTests extends FakeLexer.Builder
 {
     @Test
     public void testIntegerType()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.integer(100)
+        lexer.add(mainFunction(
+                integer(100)
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

@@ -2,8 +2,6 @@ package com.mijara.tests;
 
 import com.mijara.ast.ExpressionStatementAST;
 import com.mijara.ast.FunctionCallAST;
-import com.mijara.ast.IntegerAST;
-import com.mijara.ast.ValueExpressionAST;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
@@ -12,14 +10,14 @@ import com.mijara.parser.RecursiveDescentParser;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ParserFunctionCallTests
+public class ParserFunctionCallTests extends FakeLexer.Builder
 {
     @Test
     public void testSimple()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.functionCall("Main")
+        lexer.add(mainFunction(
+                functionCall("Main")
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
@@ -41,10 +39,8 @@ public class ParserFunctionCallTests
         int number2 = (int) (Math.random() * Integer.MAX_VALUE);
 
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.functionCall("Main",
-                        FakeLexer.Builder.integer(number1),
-                        FakeLexer.Builder.integer(number2))
+        lexer.add(mainFunction(
+                functionCall("Main", integer(number1), integer(number2))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

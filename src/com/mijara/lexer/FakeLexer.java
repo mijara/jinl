@@ -92,6 +92,25 @@ public class FakeLexer implements Lexer
         }
 
         /**
+         * Creates a function with parameters and void as return type.
+         *
+         * @param name the function name
+         * @param params parameters of the function.
+         * @return the token stream
+         */
+        public static Token[] functionWithParams(String name, Token[] params)
+        {
+            ArrayList<Token> tokens = new ArrayList<>();
+            tokens.add(new FunctionNameToken(name));
+            tokens.add(new Token('('));
+            Collections.addAll(tokens, params);
+            tokens.add(new Token(')'));
+            tokens.add(Token.endToken);
+
+            return tokens.toArray(new Token[0]);
+        }
+
+        /**
          * Creates a function with void as return type.
          *
          * @param name the function name
@@ -242,7 +261,7 @@ public class FakeLexer implements Lexer
             return new Token[] {
                     new FunctionNameToken(name),
                     new Token('('),
-                    new Token(')')
+                    new Token(')'),
             };
         }
 

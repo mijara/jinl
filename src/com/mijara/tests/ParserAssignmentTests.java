@@ -10,7 +10,7 @@ import com.mijara.parser.RecursiveDescentParser;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ParserAssignmentTests
+public class ParserAssignmentTests extends FakeLexer.Builder
 {
     @Test
     public void testSimpleAssignment()
@@ -19,8 +19,8 @@ public class ParserAssignmentTests
 
         FakeLexer lexer = new FakeLexer();
 
-        lexer.add(FakeLexer.Builder.mainFunction(
-                FakeLexer.Builder.assignment("variable", FakeLexer.Builder.integer(number))
+        lexer.add(mainFunction(
+                assignment("variable", integer(number))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

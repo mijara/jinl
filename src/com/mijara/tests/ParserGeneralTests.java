@@ -8,13 +8,13 @@ import com.mijara.parser.RecursiveDescentParser;
 import com.mijara.types.Type;
 import org.junit.Test;
 
-public class ParserGeneralTests
+public class ParserGeneralTests extends FakeLexer.Builder
 {
     @Test(expected = ParserError.class)
     public void testInvalidInput()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.varDecl("NONE", Type.getIntType()));
+        lexer.add(varDecl("NONE", Type.getIntType()));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();

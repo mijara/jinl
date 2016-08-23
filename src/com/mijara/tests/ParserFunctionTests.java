@@ -15,14 +15,13 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 
-public class ParserFunctionTests
+public class ParserFunctionTests extends FakeLexer.Builder
 {
     @Test
     public void testSimpleFunction()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(new FunctionNameToken("Main"), new Token('('), new Token(')'));
-        lexer.add(Token.endToken);
+        lexer.add(mainFunction());
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
 
@@ -38,10 +37,9 @@ public class ParserFunctionTests
     public void testSimpleFunctionWithParams()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(new FunctionNameToken("Main"), new Token('('));
-        lexer.add(new IdToken("int"), new IdToken("variable"));
-        lexer.add(new Token(')'));
-        lexer.add(Token.endToken);
+        lexer.add(functionWithParams("Main",
+                parameters(param(Type.getIntType(), "variable"))
+        ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
 
@@ -60,10 +58,8 @@ public class ParserFunctionTests
     public void testSimpleFunctionWithParamsNonVoid()
     {
         FakeLexer lexer = new FakeLexer();
-        lexer.add(FakeLexer.Builder.function("Main",
-                FakeLexer.Builder.parameters(
-                        FakeLexer.Builder.param(Type.getIntType(), "someVar")
-                ),
+        lexer.add(function("Main",
+                parameters(param(Type.getIntType(), "someVar")),
                 Type.getFloatType()
         ));
 
