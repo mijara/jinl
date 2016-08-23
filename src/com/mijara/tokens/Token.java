@@ -69,6 +69,11 @@ public class Token
         return (IntegerToken) this;
     }
 
+    public FloatToken toFloat()
+    {
+        return (FloatToken) this;
+    }
+
     /**
      * @return this token as an ID.
      */

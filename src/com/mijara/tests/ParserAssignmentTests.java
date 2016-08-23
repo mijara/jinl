@@ -20,7 +20,7 @@ public class ParserAssignmentTests extends FakeLexer.Builder
         FakeLexer lexer = new FakeLexer();
 
         lexer.add(mainFunction(
-                assignment("variable", integer(number))
+                assignment("variable", integerVal(number))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

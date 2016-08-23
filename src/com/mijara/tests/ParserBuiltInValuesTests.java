@@ -2,6 +2,7 @@ package com.mijara.tests;
 
 import com.mijara.ast.ExpressionAST;
 import com.mijara.ast.ExpressionStatementAST;
+import com.mijara.ast.FloatAST;
 import com.mijara.ast.IntegerAST;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
@@ -16,11 +17,11 @@ import static org.hamcrest.CoreMatchers.is;
 public class ParserBuiltInValuesTests extends FakeLexer.Builder
 {
     @Test
-    public void testIntegerType()
+    public void testIntegerValue()
     {
         FakeLexer lexer = new FakeLexer();
         lexer.add(mainFunction(
-                integer(100)
+                integerVal(100)
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());
@@ -38,5 +39,32 @@ public class ParserBuiltInValuesTests extends FakeLexer.Builder
                 expression instanceof IntegerAST);
 
         Assert.assertThat(((IntegerAST) expression).getValue(), is(100));
+    }
+
+    @Test
+    public void testFloatValue()
+    {
+        float number = (float) (Math.random() * Float.MAX_VALUE);
+
+        FakeLexer lexer = new FakeLexer();
+        lexer.add(mainFunction(
+                floatVal(number)
+        ));
+
+        Parser parser = new RecursiveDescentParser(lexer, new Program());
+        parser.parse();
+
+        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
+        ExpressionStatementAST statement = explorer
+                .function("Main")
+                .entry()
+                .first(ExpressionStatementAST.class);
+
+        ExpressionAST expression = statement.getExpression();
+
+        Assert.assertTrue("The expression should be an FloatAST.",
+                expression instanceof FloatAST);
+
+        Assert.assertThat(((FloatAST) expression).getValue(), is(number));
     }
 }

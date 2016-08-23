@@ -40,7 +40,7 @@ public class ParserFunctionCallTests extends FakeLexer.Builder
 
         FakeLexer lexer = new FakeLexer();
         lexer.add(mainFunction(
-                functionCall("Main", integer(number1), integer(number2))
+                functionCall("Main", integerVal(number1), integerVal(number2))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

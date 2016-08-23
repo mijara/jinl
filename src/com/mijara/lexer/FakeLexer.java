@@ -1,9 +1,6 @@
 package com.mijara.lexer;
 
-import com.mijara.tokens.FunctionNameToken;
-import com.mijara.tokens.IdToken;
-import com.mijara.tokens.IntegerToken;
-import com.mijara.tokens.Token;
+import com.mijara.tokens.*;
 import com.mijara.types.Type;
 import com.mijara.utils.Validate;
 
@@ -255,9 +252,14 @@ public class FakeLexer implements Lexer
             return stream.toArray(new Token[0]);
         }
 
-        public static Token[] integer(int value)
+        public static Token[] integerVal(int value)
         {
             return new Token[] { new IntegerToken(value) };
+        }
+
+        public static Token[] floatVal(float value)
+        {
+            return new Token[] { new FloatToken(value) };
         }
 
         public static Token[] assignment(String variable, Token[] value)

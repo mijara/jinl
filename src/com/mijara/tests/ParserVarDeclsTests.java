@@ -42,7 +42,7 @@ public class ParserVarDeclsTests extends FakeLexer.Builder
         FakeLexer lexer = new FakeLexer();
         lexer.add(mainFunction(
                 varDecl("someVar", Type.getFloatType(),
-                        integer(number)
+                        integerVal(number)
                 )
         ));
 
@@ -66,7 +66,7 @@ public class ParserVarDeclsTests extends FakeLexer.Builder
 
         FakeLexer lexer = new FakeLexer();
         lexer.add(mainFunction(
-                varDecl("someVar", integer(number))
+                varDecl("someVar", integerVal(number))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

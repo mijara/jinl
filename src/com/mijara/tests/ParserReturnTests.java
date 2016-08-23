@@ -1,6 +1,5 @@
 package com.mijara.tests;
 
-import com.mijara.ast.FunctionCallAST;
 import com.mijara.ast.IntegerAST;
 import com.mijara.ast.ReturnAST;
 import com.mijara.engine.Program;
@@ -20,7 +19,7 @@ public class ParserReturnTests extends FakeLexer.Builder
     {
         FakeLexer lexer = new FakeLexer();
         lexer.add(mainFunction(
-                returnStmt(integer(100))
+                returnStmt(integerVal(100))
         ));
 
         Parser parser = new RecursiveDescentParser(lexer, new Program());

@@ -1,7 +1,7 @@
 package com.mijara.ast;
 
 /**
- * Any expression that can hold a value, such as integer, string, float, etc.
+ * Any expression that can hold a value, such as integerVal, string, float, etc.
  *
  * @param <T> the type to hold
  *

@@ -3,9 +3,9 @@ package com.mijara.tokens;
 public class IntegerToken extends ValueToken<Integer>
 {
     /**
-     * Constructs an integer token.
+     * Constructs an integerVal token.
      *
-     * @param value the integer value to store.
+     * @param value the integerVal value to store.
      */
     public IntegerToken(int value)
     {

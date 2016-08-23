@@ -220,15 +220,24 @@ public class RecursiveDescentParser implements Parser
         switch (token.getTag()) {
             case Token.INTEGER:
                 return parseInteger();
+            case Token.FLOAT:
+                return parseFloat();
         }
 
         return null;
     }
 
+    private FloatAST parseFloat()
+    {
+        float value = token.toFloat().getValue();
+        nextToken(); // eat float.
+        return new FloatAST(value);
+    }
+
     private IntegerAST parseInteger()
     {
         int value = token.toInt().getValue();
-        nextToken();
+        nextToken(); // eat int.
         return new IntegerAST(value);
     }
 
