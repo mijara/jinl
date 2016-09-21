@@ -11,4 +11,10 @@ public class IntegerToken extends ValueToken<Integer>
     {
         super(Token.INTEGER, value);
     }
+
+    @Override
+    public String toString()
+    {
+        return "[Integer] " + getValue();
+    }
 }

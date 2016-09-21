@@ -1,8 +1,6 @@
 package com.mijara.lexer;
 
-import com.mijara.tokens.FunctionNameToken;
-import com.mijara.tokens.IdToken;
-import com.mijara.tokens.Token;
+import com.mijara.tokens.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +14,7 @@ import java.util.HashMap;
  */
 public class StreamLexer implements Lexer
 {
-    private char peek = '\0';
+    private char peek = ' ';
     private int line = 0;
     private HashMap<String, Token> reserved = new HashMap<>();
 
@@ -24,6 +22,7 @@ public class StreamLexer implements Lexer
     {
         reserved.put("End", Token.endToken);
         reserved.put("var", Token.varToken);
+        reserved.put("float", new IdToken("float"));
     }
 
     private Token process()
@@ -39,19 +38,19 @@ public class StreamLexer implements Lexer
             case '@':
                 return lexFunctionName();
             case '=':
-                if (next() == '=') {
+                if (next('=')) {
                     return Token.equalsToken;
                 } else {
                     return new Token('=');
                 }
             case '<':
-                if (next() == '=') {
+                if (next('=')) {
                     return Token.leqToken;
                 } else {
                     return new Token('<');
                 }
             case '>':
-                if (next() == '=') {
+                if (next('=')) {
                     return Token.geqToken;
                 } else {
                     return new Token('>');
@@ -71,8 +70,36 @@ public class StreamLexer implements Lexer
             return reserved.get(value);
         }
 
+        if (Character.isDigit(peek)) {
+            // [0-9]+ -> Integer
+            // [0-9]+\.[0-9]+f -> Float
+            // [0-9]+\.[0-9]+ -> Double
+
+            StringBuilder builder = new StringBuilder();
+
+            do {
+                builder.append(peek);
+            } while (Character.isDigit(next()));
+
+            if (peek != '.') {
+                return new IntegerToken(Integer.parseInt(builder.toString()));
+            }
+
+            do {
+                builder.append(peek);
+            } while (Character.isDigit(next()));
+
+            if (peek == 'f') {
+                return new FloatToken(Float.parseFloat(builder.toString()));
+            }
+
+            return new DoubleToken(Double.parseDouble(builder.toString()));
+        }
+
         // this is a single character symbol, return it as is.
-        return new Token(peek);
+        Token singleChar = new Token(peek);
+        peek = ' ';
+        return singleChar;
     }
 
     private String literal()
@@ -85,6 +112,11 @@ public class StreamLexer implements Lexer
         }
 
         return builder.toString();
+    }
+
+    private void resetPeek()
+    {
+        peek = '\0';
     }
 
     private FunctionNameToken lexFunctionName()
@@ -106,8 +138,8 @@ public class StreamLexer implements Lexer
 
     private void skipWhitespace()
     {
-        for (;;) {
-            switch (next()) {
+        for (;;next()) {
+            switch (peek) {
                 case ' ':
                 case '\t':
                     continue;
@@ -136,6 +168,24 @@ public class StreamLexer implements Lexer
         }
 
         return peek;
+    }
+
+    /**
+     * Matches the next peek with the argument given, if they are equal, then
+     * return true and set the peek to ' ' (whitespace).
+     * @param c the character to match against.
+     * @return true if they match.
+     */
+    private boolean next(char c)
+    {
+        next();
+
+        if (peek != c) {
+            return false;
+        }
+
+        peek = ' ';
+        return true;
     }
 
     @Override

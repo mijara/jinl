@@ -2,9 +2,7 @@ package com.mijara.tests;
 
 import com.mijara.lexer.Lexer;
 import com.mijara.lexer.StreamLexer;
-import com.mijara.tokens.FunctionNameToken;
-import com.mijara.tokens.IdToken;
-import com.mijara.tokens.Token;
+import com.mijara.tokens.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -43,7 +41,7 @@ public class StreamLexerTests
     }
 
     @Test
-    public void testSingleChar()
+    public void testSingleChars()
     {
         String chars = "();{}.";
         setSource(chars);
@@ -74,7 +72,7 @@ public class StreamLexerTests
     }
 
     @Test
-    public void testSomeSymbols()
+    public void testMathSymbols()
     {
         setSource("<= >= <");
 
@@ -83,6 +81,52 @@ public class StreamLexerTests
         Assert.assertEquals(Token.leqToken, lexer.getNext());
         Assert.assertEquals(Token.geqToken, lexer.getNext());
         Assert.assertEquals(new Token('<'), lexer.getNext());
+    }
+
+    @Test
+    public void testVarAssignInteger()
+    {
+        setSource("var mySymbol:int = 42");
+
+        Lexer lexer = new StreamLexer();
+
+        Assert.assertEquals(Token.varToken, lexer.getNext());
+        Assert.assertEquals(new IdToken("mySymbol"), lexer.getNext());
+        Assert.assertEquals(new Token(':'), lexer.getNext());
+        Assert.assertEquals(new IdToken("int"), lexer.getNext());
+        Assert.assertEquals(new Token('='), lexer.getNext());
+        Assert.assertEquals(new IntegerToken(42), lexer.getNext());
+    }
+
+    @Test
+    public void testVarAssignFloat()
+    {
+        setSource("var mySymbol:float = 42.5f");
+
+        Lexer lexer = new StreamLexer();
+
+        Assert.assertEquals(Token.varToken, lexer.getNext());
+        Assert.assertEquals(new IdToken("mySymbol"), lexer.getNext());
+        Assert.assertEquals(new Token(':'), lexer.getNext());
+        Assert.assertEquals(new IdToken("float"), lexer.getNext());
+        Assert.assertEquals(new Token('='), lexer.getNext());
+        Assert.assertEquals(new FloatToken(42.5f), lexer.getNext());
+    }
+
+    @Test
+    public void testVarAssignDouble()
+    {
+        setSource("var mySymbol:double = 42.5");
+
+        Lexer lexer = new StreamLexer();
+
+        Assert.assertEquals(Token.varToken, lexer.getNext());
+        Assert.assertEquals(new IdToken("mySymbol"), lexer.getNext());
+        Assert.assertEquals(new Token(':'), lexer.getNext());
+        Assert.assertEquals(new IdToken("double"), lexer.getNext());
+        Assert.assertEquals(new Token('='), lexer.getNext());
+        Assert.assertEquals(new DoubleToken(42.5), lexer.getNext());
+        Assert.assertEquals(Token.eofToken, lexer.getNext());
     }
 
     private void setSource(String source)
