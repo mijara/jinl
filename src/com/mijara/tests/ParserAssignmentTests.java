@@ -1,7 +1,7 @@
 package com.mijara.tests;
 
-import com.mijara.ast.AssignmentAST;
-import com.mijara.ast.IntegerAST;
+import com.mijara.ast.Assignment;
+import com.mijara.ast.IntegerNode;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
@@ -27,10 +27,10 @@ public class ParserAssignmentTests extends FakeLexer.Builder
         parser.parse();
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        AssignmentAST assignment = explorer.function("Main").entry().first(AssignmentAST.class);
+        Assignment assignment = explorer.function("Main").entry().first(Assignment.class);
 
         Assert.assertNotNull(assignment);
         Assert.assertEquals(assignment.getVariable(), "variable");
-        Assert.assertEquals(((IntegerAST) assignment.getValue()).getValue().intValue(), number);
+        Assert.assertEquals(((IntegerNode) assignment.getValue()).getValue().intValue(), number);
     }
 }

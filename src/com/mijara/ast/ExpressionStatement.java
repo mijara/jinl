@@ -6,16 +6,16 @@ package com.mijara.ast;
  *
  * @author mijara
  */
-public class ExpressionStatementAST extends StatementAST
+public class ExpressionStatement extends Statement
 {
-    private ExpressionAST expression;
+    private Expression expression;
 
-    public ExpressionStatementAST(ExpressionAST expression)
+    public ExpressionStatement(Expression expression)
     {
         this.expression = expression;
     }
 
-    public ExpressionAST getExpression()
+    public Expression getExpression()
     {
         return expression;
     }

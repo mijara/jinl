@@ -1,7 +1,7 @@
 package com.mijara.tests;
 
-import com.mijara.ast.IntegerAST;
-import com.mijara.ast.VarDeclAST;
+import com.mijara.ast.IntegerNode;
+import com.mijara.ast.VarDecl;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
@@ -29,7 +29,7 @@ public class ParserVarDeclsTests extends FakeLexer.Builder
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
 
-        VarDeclAST varDecl = (VarDeclAST) explorer.function("Main").entry().first();
+        VarDecl varDecl = (VarDecl) explorer.function("Main").entry().first();
         Assert.assertThat(varDecl.getName(), is("someVar"));
         Assert.assertThat(varDecl.getType(), is(Type.getFloatType()));
     }
@@ -52,10 +52,10 @@ public class ParserVarDeclsTests extends FakeLexer.Builder
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
 
-        VarDeclAST varDecl = (VarDeclAST) explorer.function("Main").entry().first();
+        VarDecl varDecl = (VarDecl) explorer.function("Main").entry().first();
         Assert.assertNotNull(varDecl.getInitial());
 
-        IntegerAST initial = (IntegerAST) varDecl.getInitial();
+        IntegerNode initial = (IntegerNode) varDecl.getInitial();
         Assert.assertEquals(initial.getValue().intValue(), number);
     }
 
@@ -75,11 +75,11 @@ public class ParserVarDeclsTests extends FakeLexer.Builder
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
 
-        VarDeclAST varDecl = (VarDeclAST) explorer.function("Main").entry().first();
+        VarDecl varDecl = (VarDecl) explorer.function("Main").entry().first();
         Assert.assertNotNull(varDecl.getInitial());
         Assert.assertNull(varDecl.getType());
 
-        IntegerAST initial = (IntegerAST) varDecl.getInitial();
+        IntegerNode initial = (IntegerNode) varDecl.getInitial();
         Assert.assertEquals(initial.getValue().intValue(), number);
     }
 }

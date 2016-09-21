@@ -1,17 +1,17 @@
 package com.mijara.ast;
 
-public class AssignmentAST extends StatementAST
+public class Assignment extends Statement
 {
     String variable;
-    ExpressionAST value;
+    Expression value;
 
-    public AssignmentAST(String variable, ExpressionAST value)
+    public Assignment(String variable, Expression value)
     {
         this.variable = variable;
         this.value = value;
     }
 
-    public ExpressionAST getValue()
+    public Expression getValue()
     {
         return value;
     }

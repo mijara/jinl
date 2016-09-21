@@ -1,6 +1,6 @@
 package com.mijara.engine;
 
-import com.mijara.ast.FunctionAST;
+import com.mijara.ast.Function;
 
 import java.util.ArrayList;
 
@@ -10,14 +10,14 @@ import java.util.ArrayList;
  */
 public class Program
 {
-    private ArrayList<FunctionAST> functions = new ArrayList<>();
+    private ArrayList<Function> functions = new ArrayList<>();
 
-    public void addFunction(FunctionAST node)
+    public void addFunction(Function node)
     {
         functions.add(node);
     }
 
-    public ArrayList<FunctionAST> getFunctions()
+    public ArrayList<Function> getFunctions()
     {
         return functions;
     }

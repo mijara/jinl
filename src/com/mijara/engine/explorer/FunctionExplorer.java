@@ -1,13 +1,12 @@
 package com.mijara.engine.explorer;
 
-import com.mijara.ast.BlockAST;
-import com.mijara.ast.FunctionAST;
+import com.mijara.ast.Function;
 
 public class FunctionExplorer
 {
-    private FunctionAST function;
+    private Function function;
 
-    public FunctionExplorer(FunctionAST function)
+    public FunctionExplorer(Function function)
     {
         this.function = function;
     }
@@ -17,7 +16,7 @@ public class FunctionExplorer
         return new BlockExplorer(function.getBlock());
     }
 
-    public FunctionAST get()
+    public Function get()
     {
         return function;
     }

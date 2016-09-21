@@ -1,7 +1,7 @@
 package com.mijara.tests;
 
-import com.mijara.ast.FunctionAST;
-import com.mijara.ast.ParameterAST;
+import com.mijara.ast.Function;
+import com.mijara.ast.Parameter;
 import com.mijara.engine.Program;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parser.Parser;
@@ -26,7 +26,7 @@ public class ParserFunctionTests extends FakeLexer.Builder
 
         Program program = parser.getProgram();
 
-        FunctionAST function = program.getFunctions().get(0);
+        Function function = program.getFunctions().get(0);
         Assert.assertEquals(function.getName(), "Main");
     }
 
@@ -43,10 +43,10 @@ public class ParserFunctionTests extends FakeLexer.Builder
         parser.parse();
         Program program = parser.getProgram();
 
-        FunctionAST function = program.getFunctions().get(0);
+        Function function = program.getFunctions().get(0);
         Assert.assertThat(function.getParameters().size(), is(1));
 
-        ParameterAST parameter = function.getParameters().get(0);
+        Parameter parameter = function.getParameters().get(0);
         Assert.assertThat(parameter.getType(), is(Type.getIntType()));
         Assert.assertThat(parameter.getName(), is("variable"));
     }
@@ -65,7 +65,7 @@ public class ParserFunctionTests extends FakeLexer.Builder
         parser.parse();
         Program program = parser.getProgram();
 
-        FunctionAST function = program.getFunctions().get(0);
+        Function function = program.getFunctions().get(0);
         Assert.assertThat(function.getReturnType(), is(Type.getFloatType()));
     }
 }

@@ -5,10 +5,10 @@ package com.mijara.ast;
  *
  * @author mijara
  */
-public class ExpressionAST
+public class Expression
 {
-    public ValueExpressionAST toValue()
+    public ValueExpression toValue()
     {
-        return (ValueExpressionAST) this;
+        return (ValueExpression) this;
     }
 }

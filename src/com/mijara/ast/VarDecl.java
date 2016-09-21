@@ -2,13 +2,13 @@ package com.mijara.ast;
 
 import com.mijara.types.Type;
 
-public class VarDeclAST extends StatementAST
+public class VarDecl extends Statement
 {
     private Type type;
     private String name;
-    private ExpressionAST initial;
+    private Expression initial;
 
-    public VarDeclAST(String name, Type type, ExpressionAST initial)
+    public VarDecl(String name, Type type, Expression initial)
     {
         this.type = type;
         this.name = name;
@@ -25,7 +25,7 @@ public class VarDeclAST extends StatementAST
         return name;
     }
 
-    public ExpressionAST getInitial()
+    public Expression getInitial()
     {
         return initial;
     }

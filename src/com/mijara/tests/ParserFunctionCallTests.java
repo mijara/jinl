@@ -1,7 +1,7 @@
 package com.mijara.tests;
 
-import com.mijara.ast.ExpressionStatementAST;
-import com.mijara.ast.FunctionCallAST;
+import com.mijara.ast.ExpressionStatement;
+import com.mijara.ast.FunctionCall;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
@@ -24,9 +24,9 @@ public class ParserFunctionCallTests extends FakeLexer.Builder
         parser.parse();
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatementAST statement =
-                explorer.function("Main").entry().first(ExpressionStatementAST.class);
-        FunctionCallAST functionCall = (FunctionCallAST) statement.getExpression();
+        ExpressionStatement statement =
+                explorer.function("Main").entry().first(ExpressionStatement.class);
+        FunctionCall functionCall = (FunctionCall) statement.getExpression();
 
         Assert.assertEquals(functionCall.getFunctionName(), "Main");
         Assert.assertEquals(functionCall.getArguments().size(), 0);
@@ -47,9 +47,9 @@ public class ParserFunctionCallTests extends FakeLexer.Builder
         parser.parse();
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatementAST statement =
-                explorer.function("Main").entry().first(ExpressionStatementAST.class);
-        FunctionCallAST functionCall = (FunctionCallAST) statement.getExpression();
+        ExpressionStatement statement =
+                explorer.function("Main").entry().first(ExpressionStatement.class);
+        FunctionCall functionCall = (FunctionCall) statement.getExpression();
 
         Assert.assertEquals("Main", functionCall.getFunctionName());
         Assert.assertEquals(2, functionCall.getArguments().size());

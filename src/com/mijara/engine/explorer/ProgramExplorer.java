@@ -1,6 +1,6 @@
 package com.mijara.engine.explorer;
 
-import com.mijara.ast.FunctionAST;
+import com.mijara.ast.Function;
 import com.mijara.engine.Program;
 
 public class ProgramExplorer
@@ -14,7 +14,7 @@ public class ProgramExplorer
 
     public FunctionExplorer function(String name)
     {
-        for (FunctionAST function : program.getFunctions()) {
+        for (Function function : program.getFunctions()) {
             if (function.getName().equals(name)) {
                 return new FunctionExplorer(function);
             }

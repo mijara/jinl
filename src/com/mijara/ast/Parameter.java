@@ -2,12 +2,12 @@ package com.mijara.ast;
 
 import com.mijara.types.Type;
 
-public class ParameterAST
+public class Parameter
 {
     private Type type;
     private String name;
 
-    public ParameterAST(Type type, String name)
+    public Parameter(Type type, String name)
     {
         this.type = type;
         this.name = name;

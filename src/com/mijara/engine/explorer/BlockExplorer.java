@@ -1,23 +1,23 @@
 package com.mijara.engine.explorer;
 
-import com.mijara.ast.BlockAST;
-import com.mijara.ast.StatementAST;
+import com.mijara.ast.Block;
+import com.mijara.ast.Statement;
 
 public class BlockExplorer
 {
-    private BlockAST block;
+    private Block block;
 
-    public BlockExplorer(BlockAST block)
+    public BlockExplorer(Block block)
     {
         this.block = block;
     }
 
-    public StatementAST first()
+    public Statement first()
     {
         return block.getStatements().get(0);
     }
 
-    public <T extends StatementAST> T first(Class<T> clazz)
+    public <T extends Statement> T first(Class<T> clazz)
     {
         return clazz.cast(block.getStatements().get(0));
     }

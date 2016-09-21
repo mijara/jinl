@@ -1,9 +1,9 @@
 package com.mijara.tests;
 
-import com.mijara.ast.ExpressionAST;
-import com.mijara.ast.ExpressionStatementAST;
-import com.mijara.ast.FloatAST;
-import com.mijara.ast.IntegerAST;
+import com.mijara.ast.Expression;
+import com.mijara.ast.ExpressionStatement;
+import com.mijara.ast.FloatNode;
+import com.mijara.ast.IntegerNode;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
@@ -28,17 +28,17 @@ public class ParserBuiltInValuesTests extends FakeLexer.Builder
         parser.parse();
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatementAST statement = explorer
+        ExpressionStatement statement = explorer
                 .function("Main")
                 .entry()
-                .first(ExpressionStatementAST.class);
+                .first(ExpressionStatement.class);
 
-        ExpressionAST expression = statement.getExpression();
+        Expression expression = statement.getExpression();
 
-        Assert.assertTrue("The expression should be an IntegerAST.",
-                expression instanceof IntegerAST);
+        Assert.assertTrue("The expression should be an IntegerNode.",
+                expression instanceof IntegerNode);
 
-        Assert.assertThat(((IntegerAST) expression).getValue(), is(100));
+        Assert.assertThat(((IntegerNode) expression).getValue(), is(100));
     }
 
     @Test
@@ -55,16 +55,16 @@ public class ParserBuiltInValuesTests extends FakeLexer.Builder
         parser.parse();
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatementAST statement = explorer
+        ExpressionStatement statement = explorer
                 .function("Main")
                 .entry()
-                .first(ExpressionStatementAST.class);
+                .first(ExpressionStatement.class);
 
-        ExpressionAST expression = statement.getExpression();
+        Expression expression = statement.getExpression();
 
-        Assert.assertTrue("The expression should be an FloatAST.",
-                expression instanceof FloatAST);
+        Assert.assertTrue("The expression should be an FloatNode.",
+                expression instanceof FloatNode);
 
-        Assert.assertThat(((FloatAST) expression).getValue(), is(number));
+        Assert.assertThat(((FloatNode) expression).getValue(), is(number));
     }
 }

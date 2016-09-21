@@ -2,18 +2,18 @@ package com.mijara.ast;
 
 import java.util.ArrayList;
 
-public class FunctionCallAST extends ExpressionAST
+public class FunctionCall extends Expression
 {
     String functionName;
-    ArrayList<ExpressionAST> arguments;
+    ArrayList<Expression> arguments;
 
-    public FunctionCallAST(String functionName, ArrayList<ExpressionAST> arguments)
+    public FunctionCall(String functionName, ArrayList<Expression> arguments)
     {
         this.functionName = functionName;
         this.arguments = arguments;
     }
 
-    public ArrayList<ExpressionAST> getArguments()
+    public ArrayList<Expression> getArguments()
     {
         return arguments;
     }

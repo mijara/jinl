@@ -1,6 +1,6 @@
 package com.mijara.ast;
 
-public class StatementAST
+public class Statement
 {
 
 }

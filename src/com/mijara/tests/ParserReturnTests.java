@@ -1,7 +1,7 @@
 package com.mijara.tests;
 
-import com.mijara.ast.IntegerAST;
-import com.mijara.ast.ReturnAST;
+import com.mijara.ast.IntegerNode;
+import com.mijara.ast.Return;
 import com.mijara.engine.Program;
 import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
@@ -26,12 +26,12 @@ public class ParserReturnTests extends FakeLexer.Builder
         parser.parse();
 
         ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ReturnAST returnStatement =
-                explorer.function("Main").entry().first(ReturnAST.class);
+        Return returnStatement =
+                explorer.function("Main").entry().first(Return.class);
 
         Assert.assertNotNull(returnStatement);
 
-        IntegerAST integer = (IntegerAST) returnStatement.getExpression();
+        IntegerNode integer = (IntegerNode) returnStatement.getExpression();
 
         Assert.assertNotNull(integer);
     }

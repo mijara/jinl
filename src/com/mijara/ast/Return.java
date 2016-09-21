@@ -8,16 +8,16 @@ package com.mijara.ast;
  *
  * @author mijara
  */
-public class ReturnAST extends StatementAST
+public class Return extends Statement
 {
-    private ExpressionAST expression;
+    private Expression expression;
 
-    public ReturnAST(ExpressionAST expression)
+    public Return(Expression expression)
     {
         this.expression = expression;
     }
 
-    public ExpressionAST getExpression()
+    public Expression getExpression()
     {
         return expression;
     }

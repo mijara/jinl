@@ -4,14 +4,14 @@ import com.mijara.types.Type;
 
 import java.util.ArrayList;
 
-public class FunctionAST
+public class Function
 {
     private String name;
-    private ArrayList<ParameterAST> parameters;
+    private ArrayList<Parameter> parameters;
     private Type returnType;
-    private BlockAST block;
+    private Block block;
 
-    public FunctionAST(String name, ArrayList<ParameterAST> parameters, Type returnType, BlockAST block)
+    public Function(String name, ArrayList<Parameter> parameters, Type returnType, Block block)
     {
         this.name = name;
         this.parameters = parameters;
@@ -19,7 +19,7 @@ public class FunctionAST
         this.block = block;
     }
 
-    public ArrayList<ParameterAST> getParameters()
+    public ArrayList<Parameter> getParameters()
     {
         return parameters;
     }
@@ -34,7 +34,7 @@ public class FunctionAST
         return returnType;
     }
 
-    public BlockAST getBlock()
+    public Block getBlock()
     {
         return block;
     }

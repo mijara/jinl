@@ -7,11 +7,11 @@ package com.mijara.ast;
  *
  * @author mijara
  */
-public class ValueExpressionAST <T> extends ExpressionAST
+public class ValueExpression<T> extends Expression
 {
     private T value;
 
-    public ValueExpressionAST(T value)
+    public ValueExpression(T value)
     {
         this.value = value;
     }

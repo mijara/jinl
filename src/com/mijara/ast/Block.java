@@ -9,16 +9,16 @@ import java.util.ArrayList;
  *
  * @author mijara
  */
-public class BlockAST
+public class Block
 {
-    private ArrayList<StatementAST> statements = new ArrayList<>();
+    private ArrayList<Statement> statements = new ArrayList<>();
 
-    public void addStatement(StatementAST node)
+    public void addStatement(Statement node)
     {
         statements.add(Validate.notNull(node));
     }
 
-    public ArrayList<StatementAST> getStatements()
+    public ArrayList<Statement> getStatements()
     {
         return statements;
     }

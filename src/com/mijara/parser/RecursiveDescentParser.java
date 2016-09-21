@@ -3,7 +3,6 @@ package com.mijara.parser;
 import com.mijara.ast.*;
 import com.mijara.engine.Program;
 import com.mijara.lexer.Lexer;
-import com.mijara.tokens.IdToken;
 import com.mijara.tokens.Token;
 import com.mijara.types.Type;
 import com.mijara.utils.Validate;
@@ -60,7 +59,7 @@ public class RecursiveDescentParser implements Parser
      *
      * @return the AST node.
      */
-    private FunctionAST parseFunction()
+    private Function parseFunction()
     {
         String name = token.toFunctionName().getValue();
 
@@ -72,7 +71,7 @@ public class RecursiveDescentParser implements Parser
         nextToken();
 
         // parse parameterList.
-        ArrayList<ParameterAST> parameters = new ArrayList<>();
+        ArrayList<Parameter> parameters = new ArrayList<>();
         while (token.is(Token.ID)) {
             parameters.add(parseParameter());
 
@@ -88,22 +87,22 @@ public class RecursiveDescentParser implements Parser
         Type returnType = parseSmartType();
 
         // parser block.
-        BlockAST block = parseBlock();
+        Block block = parseBlock();
 
         // function end.
         assertToken(Token.END);
         nextToken(); // eat END.
 
-        return new FunctionAST(name, parameters, returnType, block);
+        return new Function(name, parameters, returnType, block);
     }
 
     /**
      * block : statement block
      *
      */
-    private BlockAST parseBlock()
+    private Block parseBlock()
     {
-        BlockAST block = new BlockAST();
+        Block block = new Block();
 
         while (true) {
             switch (token.getTag()) {
@@ -116,7 +115,7 @@ public class RecursiveDescentParser implements Parser
                     continue;
 
                 case Token.FUNCTION_NAME:
-                    block.addStatement(new ExpressionStatementAST(parseFunctionCall()));
+                    block.addStatement(new ExpressionStatement(parseFunctionCall()));
                     continue;
 
                 case Token.RETURN:
@@ -125,9 +124,9 @@ public class RecursiveDescentParser implements Parser
 
                 default:
                     // try to parse an expression.
-                    ExpressionAST expression = parseExpression();
+                    Expression expression = parseExpression();
                     if (expression != null) {
-                        block.addStatement(new ExpressionStatementAST(expression));
+                        block.addStatement(new ExpressionStatement(expression));
                         continue;
                     }
 
@@ -136,19 +135,19 @@ public class RecursiveDescentParser implements Parser
         }
     }
 
-    private StatementAST parseReturn()
+    private Statement parseReturn()
     {
         nextToken(); // eat RETURN.
 
-        ExpressionAST expression = parseExpression();
+        Expression expression = parseExpression();
         if (expression == null) {
             throw new ParserError("Expected expression after return keyword.");
         }
 
-        return new ReturnAST(expression);
+        return new Return(expression);
     }
 
-    private ExpressionAST parseFunctionCall()
+    private Expression parseFunctionCall()
     {
         String name = token.toFunctionName().getValue();
         nextToken(); // eat name.
@@ -156,19 +155,19 @@ public class RecursiveDescentParser implements Parser
         assertToken('(');
         nextToken(); // eat '('.
 
-        ArrayList<ExpressionAST> args = new ArrayList<>();
+        ArrayList<Expression> args = new ArrayList<>();
         while (!token.is(')')) {
-            ExpressionAST expression = parseExpression();
+            Expression expression = parseExpression();
             args.add(expression);
         }
 
         assertToken(')');
         nextToken(); // eat ')'.
 
-        return new FunctionCallAST(name, args);
+        return new FunctionCall(name, args);
     }
 
-    private StatementAST parseAssignment()
+    private Statement parseAssignment()
     {
         String variable = token.toId().getValue();
         nextToken(); // eat name.
@@ -177,12 +176,12 @@ public class RecursiveDescentParser implements Parser
         nextToken(); // eat '='.
 
         // required value expression.
-        ExpressionAST value = parseExpression();
+        Expression value = parseExpression();
         if (value == null) {
             throw new ParserError("Expression expected.");
         }
 
-        return new AssignmentAST(variable, value);
+        return new Assignment(variable, value);
     }
 
     /**
@@ -190,7 +189,7 @@ public class RecursiveDescentParser implements Parser
      *         | VAR ID ':' typeName '=' expression
      *         | VAR ID '=' expression
      */
-    private VarDeclAST parseVarDecl()
+    private VarDecl parseVarDecl()
     {
         assertToken(Token.VAR);
         nextToken(); // eat VAR.
@@ -201,7 +200,7 @@ public class RecursiveDescentParser implements Parser
 
         Type type = parseSmartType();
 
-        ExpressionAST initial = null;
+        Expression initial = null;
         if (token.is('=')) {
             nextToken(); // eat '='
 
@@ -212,15 +211,15 @@ public class RecursiveDescentParser implements Parser
             }
         }
 
-        return new VarDeclAST(name, type, initial);
+        return new VarDecl(name, type, initial);
     }
 
     /**
-     * Parse an {@link ExpressionAST}.
+     * Parse an {@link Expression}.
      *
      * @return the expression object or null if nothing matches.
      */
-    private ExpressionAST parseExpression()
+    private Expression parseExpression()
     {
         switch (token.getTag()) {
             case Token.INTEGER:
@@ -232,18 +231,18 @@ public class RecursiveDescentParser implements Parser
         return null;
     }
 
-    private FloatAST parseFloat()
+    private FloatNode parseFloat()
     {
         float value = token.toFloat().getValue();
         nextToken(); // eat float.
-        return new FloatAST(value);
+        return new FloatNode(value);
     }
 
-    private IntegerAST parseInteger()
+    private IntegerNode parseInteger()
     {
         int value = token.toInt().getValue();
         nextToken(); // eat int.
-        return new IntegerAST(value);
+        return new IntegerNode(value);
     }
 
     /**
@@ -270,7 +269,7 @@ public class RecursiveDescentParser implements Parser
         return null;
     }
 
-    private ParameterAST parseParameter()
+    private Parameter parseParameter()
     {
         assertToken(Token.ID);
         Type type = Type.fromString(token.toId().getValue());
@@ -280,7 +279,7 @@ public class RecursiveDescentParser implements Parser
         String name = token.toId().getValue();
         nextToken(); // eat name.
 
-        return new ParameterAST(type, name);
+        return new Parameter(type, name);
     }
 
     private void assertToken(int tokenTag)
