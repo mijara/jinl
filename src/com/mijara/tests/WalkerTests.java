@@ -10,17 +10,12 @@ import com.mijara.walker.StatementWalker;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 public class WalkerTests
 {
     @Test
     public void testFuncDef()
     {
-        ArrayList<Parameter> parameters = new ArrayList<>();
-        parameters.add(new Parameter(Type.getIntType(), "a"));
-        Block block = new Block();
-        Function function = new Function("Main", parameters, Type.getIntType(), block);
+        Function function = new Function("Main", null, null, new Block());
 
         Program program = new Program();
         program.addFunction(function);

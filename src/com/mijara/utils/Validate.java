@@ -1,5 +1,7 @@
 package com.mijara.utils;
 
+import org.omg.CORBA.Object;
+
 public class Validate
 {
     public static void notNull(Object arg, String argName)
@@ -7,6 +9,11 @@ public class Validate
         if (arg == null) {
             throw new IllegalArgumentException(String.format("Argument can't be null: %s", argName));
         }
+    }
+
+    public static <T> T notNullOrDefault(T arg, T def)
+    {
+        return arg != null ? arg : def;
     }
 
     public static <T> T notNull(T arg)

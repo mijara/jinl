@@ -4,6 +4,7 @@ public class Type
 {
     private static Type intType = new Type("int");
     private static Type floatType = new Type("float");
+    private static Type voidType = new Type("void");
 
     private String representation;
 
@@ -32,6 +33,11 @@ public class Type
     public static Type getFloatType()
     {
         return floatType;
+    }
+
+    public static Type getVoidType()
+    {
+        return voidType;
     }
 
     @Override

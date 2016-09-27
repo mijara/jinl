@@ -1,26 +1,38 @@
 package com.mijara.walker;
 
 import com.mijara.ast.Function;
+import com.mijara.ast.Parameter;
 import com.mijara.ast.Statement;
 import com.mijara.engine.Context;
 
-public class FunctionWalker implements Walker<Function>
-{
-    private Context context;
+import java.util.ArrayList;
 
+public class FunctionWalker extends Walker
+{
     private BlockWalker blockWalker;
 
     public FunctionWalker(Context context)
     {
-        this.context = context;
+        super(context);
 
         blockWalker = new BlockWalker(context);
     }
 
-    @Override
     public void walk(Function node)
     {
-        context.addFunction(node);
+        getContext().addFunction(node);
+
+        getContext().pushScope();
+
+        walk(node.getParameters());
+
         blockWalker.walk(node.getBlock());
+
+        getContext().popScope();
+    }
+
+    public void walk(ArrayList<Parameter> parameters)
+    {
+
     }
 }

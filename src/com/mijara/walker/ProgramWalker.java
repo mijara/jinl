@@ -6,16 +6,17 @@ import com.mijara.engine.Program;
 
 import java.util.ArrayList;
 
-public class ProgramWalker implements Walker<Program>
+public class ProgramWalker extends Walker
 {
     private FunctionWalker functionWalker;
 
     public ProgramWalker(Context context)
     {
+        super(context);
+
         functionWalker = new FunctionWalker(context);
     }
 
-    @Override
     public void walk(Program node)
     {
         ArrayList<Function> functions = node.getFunctions();

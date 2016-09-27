@@ -1,6 +1,6 @@
 package com.mijara.ast;
 
-import com.mijara.engine.Value;
+import com.mijara.utils.Validate;
 import com.mijara.walker.StatementWalker;
 
 /**
@@ -11,21 +11,32 @@ import com.mijara.walker.StatementWalker;
  */
 public class ExpressionStatement extends Statement
 {
+    /**
+     * Expression contained in the statement.
+     */
     private Expression expression;
 
+    /**
+     * Creates an statement from and expression.
+     *
+     * @param expression the expression wrapped.
+     */
     public ExpressionStatement(Expression expression)
     {
-        this.expression = expression;
+        this.expression = Validate.notNull(expression);
     }
 
+    /**
+     * @return the expression wrapped.
+     */
     public Expression getExpression()
     {
         return expression;
     }
 
     @Override
-    public Value accept(StatementWalker statementWalker)
+    public void accept(StatementWalker statementWalker)
     {
-        return statementWalker.walk(this);
+        statementWalker.walk(this);
     }
 }

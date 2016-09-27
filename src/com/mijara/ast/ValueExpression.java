@@ -1,6 +1,7 @@
 package com.mijara.ast;
 
 import com.mijara.engine.Value;
+import com.mijara.utils.Validate;
 import com.mijara.walker.ExpressionWalker;
 
 /**
@@ -12,11 +13,17 @@ import com.mijara.walker.ExpressionWalker;
  */
 public abstract class ValueExpression<T> extends Expression
 {
+    /**
+     * The value wrapped.
+     */
     private T value;
 
+    /**
+     * @param value the value to wrap.
+     */
     public ValueExpression(T value)
     {
-        this.value = value;
+        this.value = Validate.notNull(value);
     }
 
     /**
