@@ -1,6 +1,8 @@
 package com.mijara.ast;
 
+import com.mijara.engine.Value;
 import com.mijara.types.Type;
+import com.mijara.walker.StatementWalker;
 
 public class VarDecl extends Statement
 {
@@ -28,5 +30,11 @@ public class VarDecl extends Statement
     public Expression getInitial()
     {
         return initial;
+    }
+
+    @Override
+    public Value accept(StatementWalker statementWalker)
+    {
+        return statementWalker.walk(this);
     }
 }

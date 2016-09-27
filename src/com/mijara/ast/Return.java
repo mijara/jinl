@@ -1,5 +1,8 @@
 package com.mijara.ast;
 
+import com.mijara.engine.Value;
+import com.mijara.walker.StatementWalker;
+
 /**
  * Return node.
  *
@@ -20,5 +23,11 @@ public class Return extends Statement
     public Expression getExpression()
     {
         return expression;
+    }
+
+    @Override
+    public Value accept(StatementWalker statementWalker)
+    {
+        return statementWalker.walk(this);
     }
 }

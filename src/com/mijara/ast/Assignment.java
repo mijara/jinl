@@ -1,5 +1,8 @@
 package com.mijara.ast;
 
+import com.mijara.engine.Value;
+import com.mijara.walker.StatementWalker;
+
 public class Assignment extends Statement
 {
     String variable;
@@ -19,5 +22,11 @@ public class Assignment extends Statement
     public String getVariable()
     {
         return variable;
+    }
+
+    @Override
+    public Value accept(StatementWalker statementWalker)
+    {
+        return statementWalker.walk(this);
     }
 }

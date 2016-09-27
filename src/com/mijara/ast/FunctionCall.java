@@ -1,5 +1,8 @@
 package com.mijara.ast;
 
+import com.mijara.engine.Value;
+import com.mijara.walker.ExpressionWalker;
+
 import java.util.ArrayList;
 
 public class FunctionCall extends Expression
@@ -21,5 +24,11 @@ public class FunctionCall extends Expression
     public String getFunctionName()
     {
         return functionName;
+    }
+
+    @Override
+    public Value accept(ExpressionWalker expressionWalker)
+    {
+        return expressionWalker.walk(this);
     }
 }

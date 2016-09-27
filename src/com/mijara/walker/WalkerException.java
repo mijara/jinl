@@ -1,4 +1,4 @@
-package com.mijara.engine.walker;
+package com.mijara.walker;
 
 public class WalkerException extends RuntimeException
 {

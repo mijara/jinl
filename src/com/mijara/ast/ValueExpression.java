@@ -1,5 +1,8 @@
 package com.mijara.ast;
 
+import com.mijara.engine.Value;
+import com.mijara.walker.ExpressionWalker;
+
 /**
  * Any expression that can hold a value, such as integerVal, string, float, etc.
  *
@@ -7,7 +10,7 @@ package com.mijara.ast;
  *
  * @author mijara
  */
-public class ValueExpression<T> extends Expression
+public abstract class ValueExpression<T> extends Expression
 {
     private T value;
 
