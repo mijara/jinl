@@ -84,6 +84,9 @@ public class Token
         return (IntegerToken) this;
     }
 
+    /**
+     * @return this token as a FLOAT.
+     */
     public FloatToken toFloat()
     {
         return (FloatToken) this;
