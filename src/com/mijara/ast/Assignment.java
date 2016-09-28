@@ -29,7 +29,7 @@ public class Assignment extends Statement
     }
 
     /**
-     * @return the right value of the assignment.
+     * @return the right-hand value of the assignment.
      */
     public Expression getValue()
     {
