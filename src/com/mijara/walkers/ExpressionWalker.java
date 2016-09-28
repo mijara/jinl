@@ -1,9 +1,8 @@
-package com.mijara.walker;
+package com.mijara.walkers;
 
 import com.mijara.ast.FloatNode;
 import com.mijara.ast.FunctionCall;
 import com.mijara.ast.IntegerNode;
-import com.mijara.ast.ValueExpression;
 import com.mijara.engine.Context;
 import com.mijara.engine.Value;
 import com.mijara.types.Type;

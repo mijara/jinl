@@ -3,11 +3,10 @@ package com.mijara.engine;
 import com.mijara.ast.Function;
 import com.mijara.exceptions.InvalidScopeException;
 import com.mijara.exceptions.UndefinedException;
-import com.mijara.walker.WalkerException;
+import com.mijara.walkers.WalkerException;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**

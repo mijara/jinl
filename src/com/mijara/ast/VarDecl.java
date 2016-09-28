@@ -2,7 +2,7 @@ package com.mijara.ast;
 
 import com.mijara.types.Type;
 import com.mijara.utils.Validate;
-import com.mijara.walker.StatementWalker;
+import com.mijara.walkers.StatementWalker;
 
 /**
  * A variable declaration consisting of name, type and value, although some of

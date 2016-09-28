@@ -1,7 +1,6 @@
 package com.mijara.ast;
 
-import com.mijara.engine.Value;
-import com.mijara.walker.StatementWalker;
+import com.mijara.walkers.StatementWalker;
 
 /**
  * Return statement node, should always be last in a block of statements.

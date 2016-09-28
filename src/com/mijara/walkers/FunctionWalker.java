@@ -1,8 +1,7 @@
-package com.mijara.walker;
+package com.mijara.walkers;
 
 import com.mijara.ast.Function;
 import com.mijara.ast.Parameter;
-import com.mijara.ast.Statement;
 import com.mijara.engine.Context;
 
 import java.util.ArrayList;

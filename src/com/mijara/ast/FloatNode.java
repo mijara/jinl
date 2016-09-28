@@ -1,7 +1,7 @@
 package com.mijara.ast;
 
 import com.mijara.engine.Value;
-import com.mijara.walker.ExpressionWalker;
+import com.mijara.walkers.ExpressionWalker;
 
 /**
  * Node that contains a float value.

@@ -1,4 +1,4 @@
-package com.mijara.walker;
+package com.mijara.walkers;
 
 import com.mijara.ast.Block;
 import com.mijara.ast.Statement;

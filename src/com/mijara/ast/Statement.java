@@ -1,6 +1,6 @@
 package com.mijara.ast;
 
-import com.mijara.walker.StatementWalker;
+import com.mijara.walkers.StatementWalker;
 
 /**
  * A statement is a construction that executes some feature of the language.
@@ -13,7 +13,7 @@ public abstract class Statement
     /**
      * Part of the Visitor pattern for statements.
      *
-     * @param statementWalker the walker (visitor) to accept.
+     * @param statementWalker the walkers (visitor) to accept.
      */
     public abstract void accept(StatementWalker statementWalker);
 }

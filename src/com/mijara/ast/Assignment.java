@@ -1,7 +1,7 @@
 package com.mijara.ast;
 
 import com.mijara.utils.Validate;
-import com.mijara.walker.StatementWalker;
+import com.mijara.walkers.StatementWalker;
 
 /**
  *

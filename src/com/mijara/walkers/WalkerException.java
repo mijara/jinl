@@ -1,7 +1,7 @@
-package com.mijara.walker;
+package com.mijara.walkers;
 
 /**
- * Thrown when a walker encounters an exception.
+ * Thrown when a walkers encounters an exception.
  */
 public class WalkerException extends RuntimeException
 {

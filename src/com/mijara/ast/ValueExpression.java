@@ -1,8 +1,6 @@
 package com.mijara.ast;
 
-import com.mijara.engine.Value;
 import com.mijara.utils.Validate;
-import com.mijara.walker.ExpressionWalker;
 
 /**
  * Any expression that can hold a value, such as integerVal, string, float, etc.

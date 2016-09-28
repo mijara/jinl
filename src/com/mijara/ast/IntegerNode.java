@@ -1,7 +1,7 @@
 package com.mijara.ast;
 
 import com.mijara.engine.Value;
-import com.mijara.walker.ExpressionWalker;
+import com.mijara.walkers.ExpressionWalker;
 
 /**
  * An expression node that wraps an integer.

@@ -7,8 +7,8 @@ import com.mijara.ast.VarDecl;
 import com.mijara.engine.Context;
 import com.mijara.engine.Program;
 import com.mijara.engine.Value;
-import com.mijara.walker.ProgramWalker;
-import com.mijara.walker.StatementWalker;
+import com.mijara.walkers.ProgramWalker;
+import com.mijara.walkers.StatementWalker;
 import org.junit.Assert;
 import org.junit.Test;
 
