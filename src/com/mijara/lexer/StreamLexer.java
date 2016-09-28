@@ -10,14 +10,30 @@ import java.util.HashMap;
  *
  * This is the recommended implementation for production.
  *
+ * A lexer should never be used twice.
+ *
  * @author mijara
  */
 public class StreamLexer implements Lexer
 {
+    /**
+     * Last read character.
+     */
     private char peek = ' ';
+
+    /**
+     * Current read line.
+     */
     private int line = 0;
+
+    /**
+     * Storage of words that can be emitted without creating new objects.
+     */
     private HashMap<String, Token> reserved = new HashMap<>();
 
+    /**
+     * Creates a new lexer.
+     */
     public StreamLexer()
     {
         reserved.put("End", Token.endToken);
@@ -25,6 +41,9 @@ public class StreamLexer implements Lexer
         reserved.put("float", new IdToken("float"));
     }
 
+    /**
+     * @return the next token read.
+     */
     private Token process()
     {
         skipWhitespace();
@@ -102,6 +121,11 @@ public class StreamLexer implements Lexer
         return singleChar;
     }
 
+    /**
+     * Reads a literal string (consisting of letters and digits).
+     *
+     * @return the read string.
+     */
     private String literal()
     {
         StringBuilder builder = new StringBuilder();
@@ -114,11 +138,9 @@ public class StreamLexer implements Lexer
         return builder.toString();
     }
 
-    private void resetPeek()
-    {
-        peek = '\0';
-    }
-
+    /**
+     * @return the read function name token.
+     */
     private FunctionNameToken lexFunctionName()
     {
         StringBuilder buffer = new StringBuilder();
@@ -136,6 +158,9 @@ public class StreamLexer implements Lexer
         return new FunctionNameToken(buffer.toString());
     }
 
+    /**
+     * skips any whitespace while accumulating the line count.
+     */
     private void skipWhitespace()
     {
         for (;;next()) {
@@ -152,6 +177,11 @@ public class StreamLexer implements Lexer
         }
     }
 
+    /**
+     * Reads the next character or sets it to '\0' for when the input is over.
+     *
+     * @return the next character read.
+     */
     private char next()
     {
         try {
@@ -173,6 +203,7 @@ public class StreamLexer implements Lexer
     /**
      * Matches the next peek with the argument given, if they are equal, then
      * return true and set the peek to ' ' (whitespace).
+     *
      * @param c the character to match against.
      * @return true if they match.
      */

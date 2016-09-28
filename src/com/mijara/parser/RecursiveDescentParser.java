@@ -9,6 +9,9 @@ import com.mijara.utils.Validate;
 
 import java.util.ArrayList;
 
+/**
+ * Uses the recursive descent parser strategy to match a grammar.
+ */
 public class RecursiveDescentParser implements Parser
 {
     /**
@@ -26,6 +29,12 @@ public class RecursiveDescentParser implements Parser
      */
     private Program program;
 
+    /**
+     * Creates a new recursive descent parser by injecting the lexer and program.
+     *
+     * @param lexer the lexer to use.
+     * @param program the program to store information to.
+     */
     public RecursiveDescentParser(Lexer lexer, Program program)
     {
         this.lexer = Validate.notNull(lexer);
@@ -99,6 +108,7 @@ public class RecursiveDescentParser implements Parser
     /**
      * block : statement block
      *
+     * @return the matched block.
      */
     private Block parseBlock()
     {
@@ -135,6 +145,9 @@ public class RecursiveDescentParser implements Parser
         }
     }
 
+    /**
+     * @return the return statement node.
+     */
     private Statement parseReturn()
     {
         nextToken(); // eat RETURN.
@@ -147,6 +160,11 @@ public class RecursiveDescentParser implements Parser
         return new Return(expression);
     }
 
+    /**
+     * functionName '(' parameterList ')'
+     *
+     * @return the function call expression node.
+     */
     private Expression parseFunctionCall()
     {
         String name = token.toFunctionName().getValue();
@@ -167,6 +185,11 @@ public class RecursiveDescentParser implements Parser
         return new FunctionCall(name, args);
     }
 
+    /**
+     * VAR name '=' expression
+     *
+     * @return the assignment node.
+     */
     private Statement parseAssignment()
     {
         String variable = token.toId().getValue();
@@ -188,6 +211,8 @@ public class RecursiveDescentParser implements Parser
      * varDecl : VAR ID ':' typeName
      *         | VAR ID ':' typeName '=' expression
      *         | VAR ID '=' expression
+     *
+     * @return the variable declaration node.
      */
     private VarDecl parseVarDecl()
     {
@@ -231,6 +256,9 @@ public class RecursiveDescentParser implements Parser
         return null;
     }
 
+    /**
+     * @return the float wrapped.
+     */
     private FloatNode parseFloat()
     {
         float value = token.toFloat().getValue();
@@ -238,6 +266,9 @@ public class RecursiveDescentParser implements Parser
         return new FloatNode(value);
     }
 
+    /**
+     * @return the integer wrapped.
+     */
     private IntegerNode parseInteger()
     {
         int value = token.toInt().getValue();
@@ -250,7 +281,7 @@ public class RecursiveDescentParser implements Parser
      * <p>
      * A smart type refers to any type that can be left blank in the source
      * code, such as a return type (in which case the type is VOID), or in a
-     * variable declaration. where the type is inferred from the initial value.
+     * variable declaration, where the type is inferred from the initial value.
      *
      * @return the type or null.
      */
@@ -269,6 +300,9 @@ public class RecursiveDescentParser implements Parser
         return null;
     }
 
+    /**
+     * @return the parameter node.
+     */
     private Parameter parseParameter()
     {
         assertToken(Token.ID);
@@ -282,6 +316,11 @@ public class RecursiveDescentParser implements Parser
         return new Parameter(type, name);
     }
 
+    /**
+     * Asserts that the current token has some tag.
+     *
+     * @param tokenTag code to assert.
+     */
     private void assertToken(int tokenTag)
     {
         if (!token.is(tokenTag)) {
@@ -289,6 +328,9 @@ public class RecursiveDescentParser implements Parser
         }
     }
 
+    /**
+     * Retrieves the next token from the lexer.
+     */
     private void nextToken()
     {
         token = lexer.getNext();

@@ -68,6 +68,7 @@ public class FakeLexer implements Lexer
          * }
          * </pre>
          *
+         * @param values a token stream to represent the parameters.
          * @return the token stream
          */
         public static Token[] parameters(Token[]... values)
