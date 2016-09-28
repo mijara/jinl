@@ -9,6 +9,9 @@ package com.mijara.tokens;
  */
 public class ValueToken <T> extends Token
 {
+    /**
+     * The internal value stored.
+     */
     private T value;
 
     /**

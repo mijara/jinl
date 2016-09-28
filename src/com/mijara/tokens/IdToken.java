@@ -1,9 +1,19 @@
 package com.mijara.tokens;
 
+/**
+ * Represents an ID, which can be a variable.
+ *
+ * @author mijara
+ */
 public class IdToken extends WordToken
 {
-    public IdToken(String value)
+    /**
+     * Construct a new ID token.
+     *
+     * @param name the name of the id.
+     */
+    public IdToken(String name)
     {
-        super(Token.ID, value);
+        super(Token.ID, name);
     }
 }

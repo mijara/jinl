@@ -1,5 +1,10 @@
 package com.mijara.tokens;
 
+/**
+ * Represent a double value in the form: \d+\.\d+f
+ *
+ * @author mijara
+ */
 public class FloatToken extends ValueToken<Float>
 {
     /**

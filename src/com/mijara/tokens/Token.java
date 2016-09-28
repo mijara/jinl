@@ -1,8 +1,5 @@
 package com.mijara.tokens;
 
-import com.sun.org.apache.bcel.internal.generic.RET;
-import com.sun.org.apache.regexp.internal.RE;
-
 /**
  * A token is the minimal piece of data that the parser needs to understand
  * the source code.
@@ -48,6 +45,9 @@ public class Token
     public static final Token greaterToken = new Token(GREATER);
     public static final Token lessToken = new Token(LESS);
 
+    /**
+     * Tag for this token.
+     */
     private int tag;
 
     /**

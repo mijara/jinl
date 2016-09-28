@@ -1,5 +1,10 @@
 package com.mijara.tokens;
 
+/**
+ * Represent a double value in the form: \d+\.\d+
+ *
+ * @author mijara
+ */
 public class DoubleToken extends ValueToken<Double>
 {
     /**

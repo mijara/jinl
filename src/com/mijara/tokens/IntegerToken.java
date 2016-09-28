@@ -1,11 +1,16 @@
 package com.mijara.tokens;
 
+/**
+ * Represents an Integer as in \d+.
+ *
+ * @author mijara
+ */
 public class IntegerToken extends ValueToken<Integer>
 {
     /**
-     * Constructs an integerVal token.
+     * Constructs an integer token.
      *
-     * @param value the integerVal value to store.
+     * @param value the integer value to store.
      */
     public IntegerToken(int value)
     {

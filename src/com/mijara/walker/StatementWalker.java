@@ -8,40 +8,67 @@ import com.mijara.engine.Context;
 import com.mijara.engine.Scope;
 import com.mijara.engine.Value;
 
-public class StatementWalker
+/**
+ * See {@link Walker}.
+ *
+ *
+ */
+public class StatementWalker extends Walker
 {
-    private Context context;
-
+    /**
+     * Walker for expressions inside statements.
+     */
     private ExpressionWalker expressionWalker;
 
+    /**
+     * {@inheritDoc}
+     */
     public StatementWalker(Context context)
     {
-        this.context = context;
+        super(context);
 
         this.expressionWalker = new ExpressionWalker(context);
     }
 
-    public Value walk(VarDecl node)
+    /**
+     * Executes the walk steps for variable declarations.
+     *
+     * @param node the node to walk through.
+     */
+    public void walk(VarDecl node)
     {
-        Scope scope = context.getScope();
+        Scope scope = getContext().getScope();
 
         Value value = scope.store(node.getName(), node.getInitial().accept(expressionWalker));
-
-        return null;
     }
 
-    public Value walk(Assignment node)
+    /**
+     * Executes the walk steps for assignment.
+     *
+     * @param node the node to walk through.
+     */
+    public void walk(Assignment node)
     {
-        return null;
+
     }
 
-    public Value walk(Return node)
+    /**
+     * Executes the walk steps for return.
+     *
+     * @param node the node to walk through.
+     */
+    public void walk(Return node)
     {
-        return null;
+
     }
 
-    public Value walk(ExpressionStatement node)
+    /**
+     * Executes the walk steps for expression statements.
+     *
+     * @param node the node to walk through.
+     */
+    public void walk(ExpressionStatement node)
     {
-        return null;
+
     }
 }

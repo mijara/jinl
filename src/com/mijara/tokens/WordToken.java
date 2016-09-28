@@ -10,6 +10,9 @@ package com.mijara.tokens;
  */
 public abstract class WordToken extends Token
 {
+    /**
+     * The value wrapped.
+     */
     private String value;
 
     /**

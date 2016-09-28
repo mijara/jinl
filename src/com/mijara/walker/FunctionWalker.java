@@ -7,10 +7,23 @@ import com.mijara.engine.Context;
 
 import java.util.ArrayList;
 
+/**
+ * See {@link Walker}.
+ *
+ * Walker for function definitions.
+ *
+ * @author mijara
+ */
 public class FunctionWalker extends Walker
 {
+    /**
+     * Used to walk through blocks.
+     */
     private BlockWalker blockWalker;
 
+    /**
+     * {@inheritDoc}
+     */
     public FunctionWalker(Context context)
     {
         super(context);
@@ -18,6 +31,11 @@ public class FunctionWalker extends Walker
         blockWalker = new BlockWalker(context);
     }
 
+    /**
+     * Executes the walk steps for function definitions.
+     *
+     * @param node the node to walk through.
+     */
     public void walk(Function node)
     {
         getContext().addFunction(node);
@@ -31,7 +49,12 @@ public class FunctionWalker extends Walker
         getContext().popScope();
     }
 
-    public void walk(ArrayList<Parameter> parameters)
+    /**
+     * Executes the walk steps for parameterLists.
+     *
+     * @param node the node to walk through.
+     */
+    public void walk(ArrayList<Parameter> node)
     {
 
     }
