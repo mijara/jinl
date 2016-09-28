@@ -22,7 +22,7 @@ public class Value
      * Creates a value with a type and representation.
      *
      * @param type the immutable type for this value.
-     * @param value the internal representation of the value.
+     * @param value the internal representation of the value, can be null for default.
      */
     public Value(Type type, Object value)
     {

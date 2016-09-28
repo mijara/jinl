@@ -39,7 +39,12 @@ public class StatementWalker extends Walker
     {
         Scope scope = getContext().getScope();
 
-        Value value = scope.store(node.getName(), node.getInitial().accept(expressionWalker));
+        Value value;
+        if (node.getInitial() == null) {
+            value = scope.store(node.getName(), new Value(node.getType(), null));
+        } else {
+            value = scope.store(node.getName(), node.getInitial().accept(expressionWalker));
+        }
     }
 
     /**

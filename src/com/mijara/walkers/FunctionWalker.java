@@ -3,6 +3,8 @@ package com.mijara.walkers;
 import com.mijara.ast.Function;
 import com.mijara.ast.Parameter;
 import com.mijara.engine.Context;
+import com.mijara.engine.Scope;
+import com.mijara.engine.Value;
 
 import java.util.ArrayList;
 
@@ -55,6 +57,10 @@ public class FunctionWalker extends Walker
      */
     public void walk(ArrayList<Parameter> node)
     {
+        Scope scope = getContext().getScope();
 
+        for (Parameter parameter : node) {
+            scope.store(parameter.getName(), new Value(parameter.getType(), null));
+        }
     }
 }
