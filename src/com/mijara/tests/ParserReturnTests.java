@@ -3,7 +3,6 @@ package com.mijara.tests;
 import com.mijara.ast.IntegerNode;
 import com.mijara.ast.Return;
 import com.mijara.engine.Program;
-import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parser.Parser;
 import com.mijara.parser.ParserError;
@@ -25,9 +24,11 @@ public class ParserReturnTests extends FakeLexer.Builder
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();
 
-        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        Return returnStatement =
-                explorer.function("Main").entry().first(Return.class);
+        Return returnStatement = (Return) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
 
         Assert.assertNotNull(returnStatement);
 

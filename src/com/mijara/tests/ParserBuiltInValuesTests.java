@@ -5,7 +5,6 @@ import com.mijara.ast.ExpressionStatement;
 import com.mijara.ast.FloatNode;
 import com.mijara.ast.IntegerNode;
 import com.mijara.engine.Program;
-import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parser.Parser;
 import com.mijara.parser.RecursiveDescentParser;
@@ -27,11 +26,11 @@ public class ParserBuiltInValuesTests extends FakeLexer.Builder
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();
 
-        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatement statement = explorer
-                .function("Main")
-                .entry()
-                .first(ExpressionStatement.class);
+        ExpressionStatement statement = (ExpressionStatement) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
 
         Expression expression = statement.getExpression();
 
@@ -54,11 +53,11 @@ public class ParserBuiltInValuesTests extends FakeLexer.Builder
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();
 
-        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatement statement = explorer
-                .function("Main")
-                .entry()
-                .first(ExpressionStatement.class);
+        ExpressionStatement statement = (ExpressionStatement) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
 
         Expression expression = statement.getExpression();
 

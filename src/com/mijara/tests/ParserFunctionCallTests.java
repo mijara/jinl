@@ -3,7 +3,6 @@ package com.mijara.tests;
 import com.mijara.ast.ExpressionStatement;
 import com.mijara.ast.FunctionCall;
 import com.mijara.engine.Program;
-import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parser.Parser;
 import com.mijara.parser.RecursiveDescentParser;
@@ -23,9 +22,12 @@ public class ParserFunctionCallTests extends FakeLexer.Builder
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();
 
-        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatement statement =
-                explorer.function("Main").entry().first(ExpressionStatement.class);
+        ExpressionStatement statement = (ExpressionStatement) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
+
         FunctionCall functionCall = (FunctionCall) statement.getExpression();
 
         Assert.assertEquals(functionCall.getFunctionName(), "Main");
@@ -46,9 +48,12 @@ public class ParserFunctionCallTests extends FakeLexer.Builder
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();
 
-        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        ExpressionStatement statement =
-                explorer.function("Main").entry().first(ExpressionStatement.class);
+        ExpressionStatement statement = (ExpressionStatement) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
+
         FunctionCall functionCall = (FunctionCall) statement.getExpression();
 
         Assert.assertEquals("Main", functionCall.getFunctionName());

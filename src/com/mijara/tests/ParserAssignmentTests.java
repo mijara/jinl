@@ -3,7 +3,6 @@ package com.mijara.tests;
 import com.mijara.ast.Assignment;
 import com.mijara.ast.IntegerNode;
 import com.mijara.engine.Program;
-import com.mijara.engine.explorer.ProgramExplorer;
 import com.mijara.lexer.FakeLexer;
 import com.mijara.parser.Parser;
 import com.mijara.parser.RecursiveDescentParser;
@@ -26,8 +25,11 @@ public class ParserAssignmentTests extends FakeLexer.Builder
         Parser parser = new RecursiveDescentParser(lexer, new Program());
         parser.parse();
 
-        ProgramExplorer explorer = new ProgramExplorer(parser.getProgram());
-        Assignment assignment = explorer.function("Main").entry().first(Assignment.class);
+        Assignment assignment = (Assignment) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
 
         Assert.assertNotNull(assignment);
         Assert.assertEquals(assignment.getVariable(), "variable");

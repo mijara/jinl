@@ -1,11 +1,13 @@
 package com.mijara.tests;
 
-import com.mijara.ast.*;
+import com.mijara.ast.Block;
+import com.mijara.ast.Function;
+import com.mijara.ast.IntegerNode;
+import com.mijara.ast.VarDecl;
 import com.mijara.engine.Context;
 import com.mijara.engine.Program;
 import com.mijara.engine.Value;
 import com.mijara.walker.ProgramWalker;
-import com.mijara.types.Type;
 import com.mijara.walker.StatementWalker;
 import org.junit.Assert;
 import org.junit.Test;
