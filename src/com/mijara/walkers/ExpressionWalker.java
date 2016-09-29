@@ -2,6 +2,7 @@ package com.mijara.walkers;
 
 import com.mijara.ast.FloatNode;
 import com.mijara.ast.FunctionCall;
+import com.mijara.ast.Identifier;
 import com.mijara.ast.IntegerNode;
 import com.mijara.engine.Context;
 import com.mijara.engine.Value;
@@ -25,7 +26,7 @@ public class ExpressionWalker extends Walker
     }
 
     /**
-     * Executes the walk steps for floats.
+     * Creates a new value from the float node.
      *
      * @param node the node to walk through
      * @return the value returned by the expression.
@@ -36,7 +37,7 @@ public class ExpressionWalker extends Walker
     }
 
     /**
-     * Executes the walk steps for integers.
+     * Creates a new value from the integer node.
      *
      * @param node the node to walk through
      * @return the value returned by the expression.
@@ -55,5 +56,16 @@ public class ExpressionWalker extends Walker
     public Value walk(FunctionCall node)
     {
         return null;
+    }
+
+    /**
+     * Takes the identifier value and returns it to be used.
+     *
+     * @param identifier the node to walk through
+     * @return the value referenced by the identifier.
+     */
+    public Value walk(Identifier identifier)
+    {
+        return getContext().getScope().load(identifier.getValue()).copy();
     }
 }

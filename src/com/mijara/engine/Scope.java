@@ -18,7 +18,7 @@ public class Scope
     private HashMap<String, Value> variables = new HashMap<>();
 
     /**
-     * Stores a new variable into this scope.
+     * Creates a new variable into this scope.
      *
      * @param name name for the variable.
      * @param value the value the variable holds.
@@ -26,10 +26,30 @@ public class Scope
      *
      * @throws AlreadyDefinedException if the variable name is already registered in this scope.
      */
-    public Value store(String name, Value value)
+    public Value create(String name, Value value)
     {
         if (variables.containsKey(name)) {
             throw new AlreadyDefinedException("Variable already defined: " + name);
+        }
+
+        variables.put(name, value);
+
+        return value;
+    }
+
+    /**
+     * Stores some value to an existing variable in this scope.
+     *
+     * @param name name for the variable.
+     * @param value the value to store in the variable.
+     * @return the value passed as argument for one-liners.
+     *
+     * @throws AlreadyDefinedException if the variable name is already registered in this scope.
+     */
+    public Value store(String name, Value value)
+    {
+        if (!variables.containsKey(name)) {
+            throw new UndefinedException("Undefined variable: " + name);
         }
 
         variables.put(name, value);
@@ -48,7 +68,7 @@ public class Scope
     public Value load(String name)
     {
         if (!variables.containsKey(name)) {
-            throw new UndefinedException("Variable not defined: " + name);
+            throw new UndefinedException("Undefined variable: " + name);
         }
 
         return variables.get(name);

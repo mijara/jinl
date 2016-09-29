@@ -41,9 +41,9 @@ public class StatementWalker extends Walker
 
         Value value;
         if (node.getInitial() == null) {
-            value = scope.store(node.getName(), new Value(node.getType(), null));
+            value = scope.create(node.getName(), new Value(node.getType(), null));
         } else {
-            value = scope.store(node.getName(), node.getInitial().accept(expressionWalker));
+            value = scope.create(node.getName(), node.getInitial().accept(expressionWalker));
         }
     }
 

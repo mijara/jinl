@@ -6,7 +6,7 @@ import com.mijara.exceptions.UndefinedException;
 import java.util.ArrayList;
 
 /**
- * Used to store the AST and metadata read from the source code
+ * Used to create the AST and metadata read from the source code
  * without inspections.
  *
  * @author mijara

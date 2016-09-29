@@ -60,7 +60,7 @@ public class FunctionWalker extends Walker
         Scope scope = getContext().getScope();
 
         for (Parameter parameter : node) {
-            scope.store(parameter.getName(), new Value(parameter.getType(), null));
+            scope.create(parameter.getName(), new Value(parameter.getType(), null));
         }
     }
 }
