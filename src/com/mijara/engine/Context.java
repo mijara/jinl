@@ -48,6 +48,7 @@ public class Context
      *
      * @param name the name of the function to be executed.
      * @param args arguments for said function.
+     * @return value returned from the function.
      */
     public Value executeFunction(String name, Value... args)
     {

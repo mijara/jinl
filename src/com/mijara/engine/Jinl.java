@@ -1,5 +1,6 @@
 package com.mijara.engine;
 
+import com.mijara.builtins.PrintFormatBuiltInFunction;
 import com.mijara.lexer.StreamLexer;
 import com.mijara.parser.Parser;
 import com.mijara.parser.RecursiveDescentParser;
@@ -33,8 +34,21 @@ public abstract class Jinl
         System.setIn(System.in);
 
         Context context = new Context();
+
+        loadBuiltIns(context);
+
         context.loadProgram(parser.getProgram());
 
         return context.executeFunction("Main").getValue();
+    }
+
+    /**
+     * Loads all built-ins to a context.
+     *
+     * @param context context to load built-ins to.
+     */
+    public static void loadBuiltIns(Context context)
+    {
+        context.addFunction(new PrintFormatBuiltInFunction());
     }
 }

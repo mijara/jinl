@@ -59,18 +59,18 @@ public class Value
      * Sets this value from another value, checking that the types are equal or can
      * be coerced.
      *
-     * @param value overrides the internal representation.
+     * @param other overrides the internal representation.
      */
-    public void setValue(Value value)
+    public void setValue(Value other)
     {
-        if (getType().equals(value.getType())) {
-            setRawValue(value.getValue());
+        if (!getType().equals(other.getType())) {
+            // TODO: check coercion.
+
+            throw new JinlInterpreterError(String.format("Values cannot be coerced: %s -> %s",
+                    other.getType().toString(), getType().toString()));
         }
 
-        // TODO: check coercion.
-
-        throw new JinlInterpreterError(String.format("Values cannot be coerced: %s -> %s",
-                value.getType().toString(), toString()));
+        setRawValue(other.getValue());
     }
 
     /**

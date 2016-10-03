@@ -1,4 +1,5 @@
 @Main () : int
     var a = 1
+    @Print(a)
     return a
 End
