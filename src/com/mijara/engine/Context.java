@@ -3,6 +3,8 @@ package com.mijara.engine;
 import com.mijara.ast.Function;
 import com.mijara.exceptions.InvalidScopeException;
 import com.mijara.exceptions.UndefinedException;
+import com.mijara.walkers.FunctionWalker;
+import com.mijara.walkers.ProgramWalker;
 import com.mijara.walkers.WalkerException;
 
 import java.util.HashMap;
@@ -27,6 +29,31 @@ public class Context
      * A queue to hold the latest scopes.
      */
     private LinkedBlockingDeque<Scope> scopes = new LinkedBlockingDeque<>();
+
+    private FunctionWalker functionWalker;
+
+    /**
+     * Creates a new context for runtime program state and execution.
+     */
+    public Context()
+    {
+        functionWalker = new FunctionWalker(this);
+    }
+
+    /**
+     * Executes a function defined in the program.
+     *
+     * Note that any function can be executed, since the parser defines them all
+     * before any of them can begin executing.
+     *
+     * @param name the name of the function to be executed.
+     * @param args arguments for said function.
+     */
+    public Value executeFunction(String name, Value... args)
+    {
+        Function function = getFunction(name);
+        return functionWalker.walk(function, args);
+    }
 
     /**
      * @param function function to add to the context.
@@ -98,5 +125,11 @@ public class Context
         }
 
         return scope;
+    }
+
+    public void loadProgram(Program program)
+    {
+        ProgramWalker walker = new ProgramWalker(this);
+        walker.walk(program);
     }
 }

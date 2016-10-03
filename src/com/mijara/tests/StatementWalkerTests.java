@@ -65,6 +65,9 @@ public class StatementWalkerTests
         statementWalker.walk(new VarDecl("z", Type.getIntType(), new Identifier("a")));
         Value value = context.getScope().load("z");
 
+        Value p = context.getScope().load("a");
+        p.setValue(1);
+
         context.popScope();
 
         Assert.assertEquals(value.getValue(), null);

@@ -54,26 +54,29 @@ public class StatementWalker extends Walker
      */
     public void walk(Assignment node)
     {
-
+        Value value = getContext().getScope().load(node.getVariable());
+        value.setValue(node.getValue().accept(expressionWalker));
     }
 
     /**
-     * Executes the walk steps for return.
+     * Returns the right-hand value.
      *
      * @param node the node to walk through.
+     * @return return value, this is the only statement that can return something.
      */
-    public void walk(Return node)
+    public Value walk(Return node)
     {
-
+        return node.getExpression().accept(expressionWalker);
     }
 
     /**
-     * Executes the walk steps for expression statements.
+     * Gets the underlying expression and uses the expression walker
+     * to execute the steps for it.
      *
      * @param node the node to walk through.
      */
     public void walk(ExpressionStatement node)
     {
-
+        node.getExpression().accept(expressionWalker);
     }
 }

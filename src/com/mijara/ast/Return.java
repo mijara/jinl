@@ -1,5 +1,6 @@
 package com.mijara.ast;
 
+import com.mijara.exceptions.JinlInterpreterError;
 import com.mijara.walkers.StatementWalker;
 
 /**
@@ -35,6 +36,6 @@ public class Return extends Statement
     @Override
     public void accept(StatementWalker statementWalker)
     {
-        statementWalker.walk(this);
+        throw new JinlInterpreterError("This method should not be called.");
     }
 }

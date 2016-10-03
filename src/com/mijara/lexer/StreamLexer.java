@@ -38,6 +38,7 @@ public class StreamLexer implements Lexer
     {
         reserved.put("End", Token.endToken);
         reserved.put("var", Token.varToken);
+        reserved.put("return", Token.returnToken);
         reserved.put("float", new IdToken("float"));
     }
 

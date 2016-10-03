@@ -129,6 +129,18 @@ public class StreamLexerTests
         Assert.assertEquals(Token.eofToken, lexer.getNext());
     }
 
+    @Test
+    public void testReturn()
+    {
+        setSource("return a");
+
+        Lexer lexer = new StreamLexer();
+
+        Assert.assertEquals(Token.returnToken, lexer.getNext());
+        Assert.assertEquals(new IdToken("a"), lexer.getNext());
+        Assert.assertEquals(Token.eofToken, lexer.getNext());
+    }
+
     private void setSource(String source)
     {
         System.setIn(new ByteArrayInputStream(source.getBytes()));

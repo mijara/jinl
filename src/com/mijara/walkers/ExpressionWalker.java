@@ -1,9 +1,6 @@
 package com.mijara.walkers;
 
-import com.mijara.ast.FloatNode;
-import com.mijara.ast.FunctionCall;
-import com.mijara.ast.Identifier;
-import com.mijara.ast.IntegerNode;
+import com.mijara.ast.*;
 import com.mijara.engine.Context;
 import com.mijara.engine.Value;
 import com.mijara.types.Type;
@@ -51,11 +48,18 @@ public class ExpressionWalker extends Walker
      * Executes the walk steps for function calls.
      *
      * @param node the node to walk through
-     * @return the value returned by the expression.
+     * @return the value returned by the function.
      */
     public Value walk(FunctionCall node)
     {
-        return null;
+        Value[] values = new Value[node.getArguments().size()];
+
+        // load values from arguments to pass to the function.
+        for (int i = 0; i < node.getArguments().size(); i++) {
+            values[i] = node.getArguments().get(i).accept(this);
+        }
+
+        return getContext().executeFunction(node.getFunctionName(), values);
     }
 
     /**

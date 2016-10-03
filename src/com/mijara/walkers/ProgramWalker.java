@@ -9,29 +9,22 @@ import java.util.ArrayList;
 /**
  * See {@link Walker}.
  *
- * Walker for the program.
+ * Walker for global program constructs (such as functions and structs).
  *
  * @author mijara
  */
 public class ProgramWalker extends Walker
 {
     /**
-     * Walker for function definitions.
-     */
-    private FunctionWalker functionWalker;
-
-    /**
      * {@inheritDoc}
      */
     public ProgramWalker(Context context)
     {
         super(context);
-
-        functionWalker = new FunctionWalker(context);
     }
 
     /**
-     * Executes the walk steps for programs.
+     * Walks through each function and defines it in the global context.
      *
      * @param node the node to walk through.
      */
@@ -40,7 +33,7 @@ public class ProgramWalker extends Walker
         ArrayList<Function> functions = node.getFunctions();
 
         for (Function function : functions) {
-            functionWalker.walk(function);
+            getContext().addFunction(function);
         }
     }
 }

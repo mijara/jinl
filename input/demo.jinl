@@ -1,2 +1,4 @@
-@Demo ()
+@Main () : int
+    var a = 1
+    return a
 End

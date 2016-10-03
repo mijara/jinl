@@ -120,16 +120,16 @@ public class RecursiveDescentParser implements Parser
                     block.addStatement(parseVarDecl());
                     continue;
 
+                case Token.RETURN:
+                    block.addStatement(parseReturn());
+                    continue;
+
                 case Token.ID:
                     block.addStatement(parseAssignment());
                     continue;
 
                 case Token.FUNCTION_NAME:
                     block.addStatement(new ExpressionStatement(parseFunctionCall()));
-                    continue;
-
-                case Token.RETURN:
-                    block.addStatement(parseReturn());
                     continue;
 
                 default:
@@ -251,9 +251,21 @@ public class RecursiveDescentParser implements Parser
                 return parseInteger();
             case Token.FLOAT:
                 return parseFloat();
+            case Token.ID:
+                return parseIdentifier();
         }
 
         return null;
+    }
+
+    /**
+     * @return the parsed identifier.
+     */
+    private Identifier parseIdentifier()
+    {
+        String value = token.toId().getValue();
+        nextToken(); // eat id.
+        return new Identifier(value);
     }
 
     /**

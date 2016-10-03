@@ -1,8 +1,11 @@
 package com.mijara.walkers;
 
 import com.mijara.ast.Block;
+import com.mijara.ast.Return;
 import com.mijara.ast.Statement;
 import com.mijara.engine.Context;
+import com.mijara.engine.Value;
+import com.mijara.types.Type;
 
 /**
  * See {@link Walker}.
@@ -32,12 +35,22 @@ public class BlockWalker extends Walker
      * Execute the walk steps for blocks.
      *
      * @param node block to walk through.
+     * @return the return value from the block.
      */
-    public void walk(Block node)
+    public Value walk(Block node)
     {
         for (Statement statement : node.getStatements()) {
             // use the visitor pattern specified in the Walker class.
-            statement.accept(statementWalker);
+
+            if (statement instanceof Return) {
+                // return the value.
+                return statementWalker.walk((Return) statement);
+            } else {
+                statement.accept(statementWalker);
+            }
         }
+
+        // return void.
+        return new Value(Type.getVoidType(), null);
     }
 }

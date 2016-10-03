@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * Used to create the AST and metadata read from the source code
  * without inspections.
  *
+ * This is the root node of the AST.
+ *
  * @author mijara
  */
 public class Program

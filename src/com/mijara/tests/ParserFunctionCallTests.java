@@ -61,4 +61,28 @@ public class ParserFunctionCallTests extends FakeLexer.Builder
         Assert.assertEquals(number1, functionCall.getArguments().get(0).toValue().getValue());
         Assert.assertEquals(number2, functionCall.getArguments().get(1).toValue().getValue());
     }
+
+    @Test
+    public void testWithArgsIdentifiers()
+    {
+        FakeLexer lexer = new FakeLexer();
+        lexer.add(mainFunction(
+                functionCall("Main", identifier("a"))
+        ));
+
+        Parser parser = new RecursiveDescentParser(lexer, new Program());
+        parser.parse();
+
+        ExpressionStatement statement = (ExpressionStatement) parser.getProgram()
+                .getFunction("Main")
+                .getBlock()
+                .getStatements()
+                .get(0);
+
+        FunctionCall functionCall = (FunctionCall) statement.getExpression();
+
+        Assert.assertEquals("Main", functionCall.getFunctionName());
+        Assert.assertEquals(1, functionCall.getArguments().size());
+        Assert.assertEquals("a", functionCall.getArguments().get(0).toValue().getValue());
+    }
 }

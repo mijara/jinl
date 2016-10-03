@@ -5,6 +5,8 @@ import com.mijara.ast.Parameter;
 import com.mijara.engine.Context;
 import com.mijara.engine.Scope;
 import com.mijara.engine.Value;
+import com.mijara.exceptions.JinlInterpreterError;
+import org.omg.CORBA.Object;
 
 import java.util.ArrayList;
 
@@ -36,31 +38,47 @@ public class FunctionWalker extends Walker
      * Executes the walk steps for function definitions.
      *
      * @param node the node to walk through.
+     * @param args arguments to execute the function with.
      */
-    public void walk(Function node)
+    public Value walk(Function node, Value... args)
     {
-        getContext().addFunction(node);
-
         getContext().pushScope();
 
-        walk(node.getParameters());
+        walk(node.getParameters(), args);
 
-        blockWalker.walk(node.getBlock());
+        Value returnValue = blockWalker.walk(node.getBlock());
+
+        assert returnValue.getType().equals(node.getReturnType()) :
+                "Return value is not valid for function: " + node.getName();
 
         getContext().popScope();
+
+        return returnValue;
     }
 
     /**
      * Executes the walk steps for parameterLists.
      *
      * @param node the node to walk through.
+     * @param args arguments to assign to parameters.
      */
-    public void walk(ArrayList<Parameter> node)
+    public void walk(ArrayList<Parameter> node, Value... args)
     {
         Scope scope = getContext().getScope();
 
-        for (Parameter parameter : node) {
-            scope.create(parameter.getName(), new Value(parameter.getType(), null));
+        // check parameters length.
+        assert node.size() == args.length :
+                String.format("Function receives %d parameters, but got %s",
+                        node.size(), args.length);
+
+        for (int i = 0; i < node.size(); i++) {
+            Parameter parameter = node.get(i);
+
+            // check parameter type.
+            assert parameter.getType().equals(args[i].getType()) :
+                    "Parameter type mismatch for function [NAME].";
+
+            scope.create(parameter.getName(), args[i].copy());
         }
     }
 }

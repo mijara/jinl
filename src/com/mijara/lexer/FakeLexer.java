@@ -280,6 +280,11 @@ public class FakeLexer implements Lexer
             return stream.toArray(new Token[0]);
         }
 
+        public static Token[] identifier(String name)
+        {
+            return new Token[] { new IdToken(name) };
+        }
+
         public static Token[] functionCall(String name)
         {
             return new Token[] {
