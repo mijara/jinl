@@ -39,11 +39,21 @@ public class StatementWalker extends Walker
     {
         Scope scope = getContext().getScope();
 
-        Value value;
         if (node.getInitial() == null) {
-            value = scope.create(node.getName(), new Value(node.getType(), null));
+            // case when only the type is defined.
+            scope.create(node.getName(), new Value(node.getType(), null));
         } else {
-            value = scope.create(node.getName(), node.getInitial().accept(expressionWalker));
+            Value initial = node.getInitial().accept(expressionWalker);
+
+            if (node.getType() == null) {
+                // type is inferred from the initial value.
+                scope.create(node.getName(), initial);
+            } else {
+                // the case when the type is defined and the initial value is too, then
+                // values can be coerced.
+                Value value = scope.create(node.getName(), new Value(node.getType(), null));
+                value.setValue(initial);
+            }
         }
     }
 

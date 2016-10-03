@@ -75,10 +75,14 @@ public class FunctionWalker extends Walker
             Parameter parameter = node.get(i);
 
             // check parameter type.
+            /*
+            TODO: this may not be necessary.
             assert parameter.getType().equals(args[i].getType()) :
                     "Parameter type mismatch for function [NAME].";
+            */
 
-            scope.create(parameter.getName(), args[i].copy());
+            Value value = scope.create(parameter.getName(), new Value(parameter.getType(), null));
+            value.setValue(args[i]);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.mijara.engine;
 
+import com.mijara.exceptions.JinlInterpreterError;
 import com.mijara.types.Type;
 
 /**
@@ -47,11 +48,29 @@ public class Value
     }
 
     /**
-     * @param value overrides the internal representation.
+     * @param value overrides the internal raw representation.
      */
-    public void setValue(Object value)
+    public void setRawValue(Object value)
     {
         this.value = value;
+    }
+
+    /**
+     * Sets this value from another value, checking that the types are equal or can
+     * be coerced.
+     *
+     * @param value overrides the internal representation.
+     */
+    public void setValue(Value value)
+    {
+        if (getType().equals(value.getType())) {
+            setRawValue(value.getValue());
+        }
+
+        // TODO: check coercion.
+
+        throw new JinlInterpreterError(String.format("Values cannot be coerced: %s -> %s",
+                value.getType().toString(), toString()));
     }
 
     /**

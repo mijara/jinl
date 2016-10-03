@@ -45,7 +45,7 @@ public class ExpressionWalker extends Walker
     }
 
     /**
-     * Executes the walk steps for function calls.
+     * Calls a function given a {@link FunctionCall} value.
      *
      * @param node the node to walk through
      * @return the value returned by the function.
