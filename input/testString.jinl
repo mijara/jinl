@@ -1,0 +1,3 @@
+@Main() : string
+    return "test"
+End

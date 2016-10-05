@@ -2,6 +2,8 @@ package com.mijara.tests;
 
 import com.mijara.ast.Function;
 import com.mijara.ast.Parameter;
+import com.mijara.ast.Return;
+import com.mijara.ast.ValueExpression;
 import com.mijara.engine.Context;
 import com.mijara.engine.Jinl;
 import com.mijara.types.Type;
@@ -49,5 +51,18 @@ public class ANTLRParserTests
 
         Function function = context.getFunction("Main");
         Assert.assertEquals("test", function.getVersion());
+    }
+
+    @Test
+    public void testString()
+    {
+        Context context = Jinl.load(new File("input/testString.jinl"));
+
+        Function function = context.getFunction("Main");
+        Return returnStatement = (Return) function.getBlock().getStatements().get(0);
+
+        Assert.assertNotNull(returnStatement.getExpression());
+        Assert.assertTrue(returnStatement.getExpression() instanceof ValueExpression);
+        Assert.assertEquals("test", ((ValueExpression<String>) returnStatement.getExpression()).getValue());
     }
 }

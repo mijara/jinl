@@ -54,6 +54,6 @@ FUNCTION_NAME:      '@'+ STRONG_NAME        { setText(getText().substring(1)); }
 STRONG_NAME:        ([A-Z][A-Za-z0-9]+);
 IDENTIFIER:         [a-zA-Z]+;
 INTEGER:            [0-9]+;
-STRING:             '"' ~[\r\n"]*? '"';
+STRING:             '"' ~[\r\n"]*? '"'      { setText(getText().substring(1, getText().length() - 1)); };
 
 WHITESPACE: ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip;

@@ -112,4 +112,10 @@ public class JinlVisitorImpl extends JinlBaseVisitor<Object>
     {
         return new Identifier(ctx.IDENTIFIER().getText());
     }
+
+    @Override
+    public Object visitString(JinlParser.StringContext ctx)
+    {
+        return new StringNode(ctx.STRING().getText());
+    }
 }

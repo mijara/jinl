@@ -65,11 +65,22 @@ public class ExpressionWalker extends Walker
     /**
      * Takes the identifier value and returns it to be used.
      *
-     * @param identifier the node to walk through
+     * @param node the node to walk through
      * @return the value referenced by the identifier.
      */
-    public Value walk(Identifier identifier)
+    public Value walk(Identifier node)
     {
-        return getContext().getScope().load(identifier.getValue()).copy();
+        return getContext().getScope().load(node.getValue()).copy();
+    }
+
+    /**
+     * Returns a value from a string node.
+     *
+     * @param node node to take the value from.
+     * @return the {@link Value}.
+     */
+    public Value walk(StringNode node)
+    {
+        return new Value(Type.getStringType(), node.getValue());
     }
 }

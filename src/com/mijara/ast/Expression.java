@@ -11,14 +11,6 @@ import com.mijara.walkers.ExpressionWalker;
 public abstract class Expression
 {
     /**
-     * @return this expression as a {@link ValueExpression}.
-     */
-    public ValueExpression toValue()
-    {
-        return (ValueExpression) this;
-    }
-
-    /**
      * Part of the Visitor Pattern implemented in Expression.
      *
      * @param expressionWalker the walkers (visitor) to accept.

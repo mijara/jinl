@@ -14,4 +14,10 @@ public class JinlTests
     {
         Assert.assertEquals(5, Jinl.execute(new File("input/testMainReturn.jinl")));
     }
+
+    @Test
+    public void testMainReturnString() throws FileNotFoundException
+    {
+        Assert.assertEquals("test", Jinl.execute(new File("input/testString.jinl")));
+    }
 }
