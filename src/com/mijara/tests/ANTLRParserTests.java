@@ -41,4 +41,13 @@ public class ANTLRParserTests
 
         Assert.assertEquals(Type.getFloatType(), parameters.get(0).getType());
     }
+
+    @Test
+    public void testFunctionVersion()
+    {
+        Context context = Jinl.load(new File("input/testFunctionVersion.jinl"));
+
+        Function function = context.getFunction("Main");
+        Assert.assertEquals("test", function.getVersion());
+    }
 }

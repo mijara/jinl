@@ -6,12 +6,14 @@ package com.mijara.antlr;
 
 program: function+;
 
-function: FUNCTION_NAME '(' parameterList? ')' (':' type)? block END;
+function: FUNCTION_NAME '(' version? parameterList? ')' (':' type)? block END;
 
-type: IDENTIFIER;
+version: IDENTIFIER ';';
 
 parameterList: (parameter ',')* parameter;
 parameter: type IDENTIFIER;
+
+type: IDENTIFIER;
 
 block: statement* returnStatement?;
 

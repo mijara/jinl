@@ -26,13 +26,14 @@ public class JinlVisitorImpl extends JinlBaseVisitor<Object>
         String name = ctx.FUNCTION_NAME().getText();
         Block block = (Block) visit(ctx.block());
 
+        String version = ctx.version() == null ? null : ctx.version().IDENTIFIER().getText();
         String returnType = ctx.type() == null ? "void" : ctx.type().IDENTIFIER().getText();
 
         @SuppressWarnings("unchecked")
         ArrayList<Parameter> parameters = ctx.parameterList() == null ? null :
                 (ArrayList<Parameter>) visit(ctx.parameterList());
 
-        return new Function(name, null, parameters, Type.fromString(returnType), block);
+        return new Function(name, version, parameters, Type.fromString(returnType), block);
     }
 
     @Override

@@ -25,11 +25,11 @@ public interface JinlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunction(JinlParser.FunctionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JinlParser#type}.
+	 * Visit a parse tree produced by {@link JinlParser#version}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType(JinlParser.TypeContext ctx);
+	T visitVersion(JinlParser.VersionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JinlParser#parameterList}.
 	 * @param ctx the parse tree
@@ -42,6 +42,12 @@ public interface JinlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParameter(JinlParser.ParameterContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JinlParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType(JinlParser.TypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JinlParser#block}.
 	 * @param ctx the parse tree
