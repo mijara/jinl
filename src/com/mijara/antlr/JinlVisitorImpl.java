@@ -28,6 +28,7 @@ public class JinlVisitorImpl extends JinlBaseVisitor<Object>
 
         String returnType = ctx.type() == null ? "void" : ctx.type().IDENTIFIER().getText();
 
+        @SuppressWarnings("unchecked")
         ArrayList<Parameter> parameters = ctx.parameterList() == null ? null :
                 (ArrayList<Parameter>) visit(ctx.parameterList());
 
