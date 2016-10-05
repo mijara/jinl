@@ -5,10 +5,7 @@ import com.mijara.lexer.StreamLexer;
 import com.mijara.parser.Parser;
 import com.mijara.parser.RecursiveDescentParser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * This is something of a factory, it bundles all default components and modules.
