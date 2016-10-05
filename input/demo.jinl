@@ -1,5 +1,5 @@
 @Main () : int
-    var a = 1
+    var a = 5
     @Print(a)
     return a
 End

@@ -28,6 +28,7 @@ public class PrintFormatBuiltInFunction extends BuiltInFunction
     public Object call(HashMap<String, Object> args)
     {
         System.out.println(args.get("a"));
+
         return null;
     }
 }
