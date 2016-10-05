@@ -10,12 +10,16 @@ public class Type
     private static Type intType = new Type("int");
     private static Type floatType = new Type("float");
     private static Type voidType = new Type("void");
+    private static Type stringType = new Type("string");
 
     /**
      * The internal name for the type name.
      */
     private String representation;
 
+    /**
+     * {@inheritDoc}
+     */
     private Type(String representation)
     {
         this.representation = representation;
@@ -34,24 +38,45 @@ public class Type
                 return intType;
             case "float":
                 return floatType;
+            case "void":
+                return voidType;
+            case "string":
+                return stringType;
         }
 
         throw new NoSuchTypeError("Invalid Type");
     }
 
+    /**
+     * @return the int static type.
+     */
     public static Type getIntType()
     {
         return intType;
     }
 
+    /**
+     * @return the float static type.
+     */
     public static Type getFloatType()
     {
         return floatType;
     }
 
+    /**
+     * @return the void static type.
+     */
     public static Type getVoidType()
     {
         return voidType;
+    }
+
+    /**
+     * @return the string static type.
+     */
+    public static Type getStringType()
+    {
+        return stringType;
     }
 
     @Override
@@ -68,7 +93,6 @@ public class Type
         }
 
         Type other = (Type) obj;
-
         return other.representation.equals(representation);
     }
 }

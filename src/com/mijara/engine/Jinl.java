@@ -25,7 +25,27 @@ public abstract class Jinl
      */
     public static Object execute(File file) throws FileNotFoundException
     {
-        FileInputStream fileInputStream = new FileInputStream("input/demo.jinl");
+        Context context = load(file);
+
+        return context.executeFunction("Main").getValue();
+    }
+
+    /**
+     * Executes a file with the default components of the Jinl Runtime.
+     *
+     * @param file main file to be executed.
+     * @return the exit value of the program.
+     *
+     * @throws FileNotFoundException if the file does not exists.
+     */
+    public static Context load(File file)
+    {
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new JinlInterpreterError("Cannot read file: " + file.getName());
+        }
 
         JinlLexer lexer = null;
         try {
@@ -48,7 +68,7 @@ public abstract class Jinl
 
         context.loadProgram(program);
 
-        return context.executeFunction("Main").getValue();
+        return context;
     }
 
     /**

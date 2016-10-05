@@ -1,5 +1,0 @@
-@Main () : int
-    var a = 5
-    @Print(a)
-    return a
-End

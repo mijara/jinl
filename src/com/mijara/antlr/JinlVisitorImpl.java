@@ -24,10 +24,31 @@ public class JinlVisitorImpl extends JinlBaseVisitor<Object>
     public Object visitFunction(JinlParser.FunctionContext ctx)
     {
         String name = ctx.FUNCTION_NAME().getText();
-        String returnType = ctx.type().IDENTIFIER().getText();
         Block block = (Block) visit(ctx.block());
 
-        return new Function(name, null, Type.fromString(returnType), block);
+        String returnType = ctx.type() == null ? "void" : ctx.type().IDENTIFIER().getText();
+
+        ArrayList<Parameter> parameters = ctx.parameterList() == null ? null :
+                (ArrayList<Parameter>) visit(ctx.parameterList());
+
+        return new Function(name, null, parameters, Type.fromString(returnType), block);
+    }
+
+    @Override
+    public Object visitParameterList(JinlParser.ParameterListContext ctx)
+    {
+        ArrayList<Parameter> parameters = new ArrayList<>();
+        for (JinlParser.ParameterContext parameterContext : ctx.parameter()) {
+            parameters.add((Parameter) visit(parameterContext));
+        }
+
+        return parameters;
+    }
+
+    @Override
+    public Object visitParameter(JinlParser.ParameterContext ctx)
+    {
+        return new Parameter(Type.fromString(ctx.type().getText()), ctx.IDENTIFIER().getText());
     }
 
     @Override

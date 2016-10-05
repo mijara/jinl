@@ -21,7 +21,7 @@ public class PrintFormatBuiltInFunction extends BuiltInFunction
      */
     public PrintFormatBuiltInFunction()
     {
-        super("Print", parameters, Type.getVoidType());
+        super("Print", "format", parameters, Type.getVoidType());
     }
 
     @Override

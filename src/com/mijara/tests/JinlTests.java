@@ -10,10 +10,8 @@ import java.io.FileNotFoundException;
 public class JinlTests
 {
     @Test
-    public void testEmpty() throws FileNotFoundException
+    public void testMainReturn() throws FileNotFoundException
     {
-        Integer integer = (Integer) Jinl.execute(new File("input/demo.jinl"));
-
-        Assert.assertEquals(new Integer(5), integer);
+        Assert.assertEquals(5, Jinl.execute(new File("input/testMainReturn.jinl")));
     }
 }

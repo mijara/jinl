@@ -31,6 +31,18 @@ public interface JinlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(JinlParser.TypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link JinlParser#parameterList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameterList(JinlParser.ParameterListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JinlParser#parameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameter(JinlParser.ParameterContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link JinlParser#block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

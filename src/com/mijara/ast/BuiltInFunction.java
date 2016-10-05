@@ -16,12 +16,13 @@ public abstract class BuiltInFunction extends Function
      * Creates a built in function node.
      *
      * @param name       name of the function, must be unique.
+     * @param version    version of the function, can be null for blank.
      * @param parameters parameters of the function, can be null for no parameters.
      * @param returnType return type of the function, can be null for void return type.
      */
-    public BuiltInFunction(String name, ArrayList<Parameter> parameters, Type returnType)
+    public BuiltInFunction(String name, String version, ArrayList<Parameter> parameters, Type returnType)
     {
-        super(name, parameters, returnType, new Block());
+        super(name, version, parameters, returnType, new Block());
     }
 
     /**

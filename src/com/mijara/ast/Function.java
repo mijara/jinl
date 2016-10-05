@@ -33,16 +33,23 @@ public class Function
     private Block block;
 
     /**
+     * Version of the function.
+     */
+    private String version;
+
+    /**
      * Creates a function node with definition.
      *
      * @param name name of the function, must be unique.
+     * @param version version name of the function, can be null for blank.
      * @param parameters parameters of the function, can be null for no parameters.
      * @param returnType return type of the function, can be null for void return type.
      * @param block definition block of the function.
      */
-    public Function(String name, ArrayList<Parameter> parameters, Type returnType, Block block)
+    public Function(String name, String version, ArrayList<Parameter> parameters, Type returnType, Block block)
     {
         this.name = Validate.notNull(name);
+        this.version = Validate.notNullOrDefault(version, "");
         this.parameters = Validate.notNullOrDefault(parameters, new ArrayList<>());
         this.block = Validate.notNull(block);
         this.returnType = Validate.notNullOrDefault(returnType, Type.getVoidType());
@@ -78,5 +85,13 @@ public class Function
     public Block getBlock()
     {
         return block;
+    }
+
+    /**
+     * @return the version name of this function.
+     */
+    public String getVersion()
+    {
+        return version;
     }
 }

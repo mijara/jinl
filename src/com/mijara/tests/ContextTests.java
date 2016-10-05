@@ -21,7 +21,7 @@ public class ContextTests
         ArrayList<Parameter> parameters = new ArrayList<>();
         parameters.add(new Parameter(Type.getIntType(), "a"));
 
-        Function mainFunction = new Function("Main", parameters, null, new Block());
+        Function mainFunction = new Function("Main", null, parameters, null, new Block());
         mainFunction.getBlock().addStatement(new VarDecl("z", null, new IntegerNode(10)));
         mainFunction.getBlock().addStatement(new Assignment("a", new Identifier("z")));
 
