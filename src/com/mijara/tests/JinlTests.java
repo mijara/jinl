@@ -14,6 +14,6 @@ public class JinlTests
     {
         Integer integer = (Integer) Jinl.execute(new File("input/demo.jinl"));
 
-        Assert.assertEquals(new Integer(1), integer);
+        Assert.assertEquals(new Integer(5), integer);
     }
 }

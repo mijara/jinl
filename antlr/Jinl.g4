@@ -28,12 +28,15 @@ expressionStatement: expression;
 expression:
     integer
     | identifier
+    | string
     | functionCall
     ;
 
 integer: INTEGER;
 
 identifier: IDENTIFIER;
+
+string: STRING;
 
 functionCall: FUNCTION_NAME '(' expression* ')';
 
@@ -42,9 +45,10 @@ END:                'End';
 VAR:                'var';
 RETURN:             'return';
 
-FUNCTION_NAME:     '@'+ STRONG_NAME        { setText(getText().substring(1)); };
-STRONG_NAME:       ([A-Z][A-Za-z0-9]+);
+FUNCTION_NAME:      '@'+ STRONG_NAME        { setText(getText().substring(1)); };
+STRONG_NAME:        ([A-Z][A-Za-z0-9]+);
 IDENTIFIER:         [a-zA-Z]+;
 INTEGER:            [0-9]+;
+STRING:             '"' ~[\r\n"]*? '"';
 
 WHITESPACE: ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip;

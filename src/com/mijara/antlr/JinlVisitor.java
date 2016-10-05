@@ -79,6 +79,12 @@ public interface JinlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentifier(JinlParser.IdentifierContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link JinlParser#string}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitString(JinlParser.StringContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link JinlParser#functionCall}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

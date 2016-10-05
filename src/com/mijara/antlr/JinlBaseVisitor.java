@@ -96,5 +96,12 @@ public class JinlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements J
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitString(JinlParser.StringContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitFunctionCall(JinlParser.FunctionCallContext ctx) { return visitChildren(ctx); }
 }
