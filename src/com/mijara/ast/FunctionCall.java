@@ -1,6 +1,7 @@
 package com.mijara.ast;
 
 import com.mijara.engine.Value;
+import com.mijara.types.Type;
 import com.mijara.utils.Validate;
 import com.mijara.walkers.ExpressionWalker;
 
@@ -19,6 +20,11 @@ public class FunctionCall extends Expression
     private String functionName;
 
     /**
+     * Name of the version of the function to call.
+     */
+    private String version;
+
+    /**
      * Arguments for the function.
      */
     private ArrayList<Expression> arguments;
@@ -27,11 +33,13 @@ public class FunctionCall extends Expression
      * Creates a new function call.
      *
      * @param functionName name for the function, can be null for version invocation.
+     * @param version version of the function, can be null for default version.
      * @param arguments arguments to pass, can be null for no arguments.
      */
-    public FunctionCall(String functionName, ArrayList<Expression> arguments)
+    public FunctionCall(String functionName, String version, ArrayList<Expression> arguments)
     {
         this.functionName = functionName;
+        this.version = Validate.notNullOrDefault(version, "");
         this.arguments = Validate.notNullOrDefault(arguments, new ArrayList<>());
     }
 
@@ -49,6 +57,14 @@ public class FunctionCall extends Expression
     public String getFunctionName()
     {
         return functionName;
+    }
+
+    /**
+     * @return the version name of the called function.
+     */
+    public String getVersion()
+    {
+        return version;
     }
 
     @Override

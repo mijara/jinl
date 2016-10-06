@@ -7,27 +7,30 @@ import com.mijara.types.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PrintFormatBuiltInFunction extends BuiltInFunction
+public class PrintBuiltInFunction extends BuiltInFunction
 {
+    /**
+     * Parameters for this print function.
+     */
     private static ArrayList<Parameter> parameters;
 
     static {
         parameters =  new ArrayList<>();
-        parameters.add(new Parameter(Type.getIntType(), "a"));
+        parameters.add(new Parameter(Type.getIntType(), "value"));
     }
 
     /**
      * Creates a built in function node.
      */
-    public PrintFormatBuiltInFunction()
+    public PrintBuiltInFunction()
     {
-        super("Print", "format", parameters, Type.getVoidType());
+        super("Print", null, parameters, Type.getVoidType());
     }
 
     @Override
     public Object call(HashMap<String, Object> args)
     {
-        System.out.println(args.get("a"));
+        System.out.println(args.get("value"));
 
         return null;
     }

@@ -98,7 +98,9 @@ public class JinlVisitorImpl extends JinlBaseVisitor<Object>
             arguments.add((Expression) visit(expressionContext));
         }
 
-        return new FunctionCall(name, arguments);
+        String version = ctx.version() == null ? null : ctx.version().IDENTIFIER().getText();
+
+        return new FunctionCall(name, version, arguments);
     }
 
     @Override

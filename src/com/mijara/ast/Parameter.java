@@ -45,4 +45,16 @@ public class Parameter
     {
         return name;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Parameter)) {
+            return false;
+        }
+
+        Parameter other = (Parameter) obj;
+
+        return type.equals(other.type) && name.equals(other.name);
+    }
 }

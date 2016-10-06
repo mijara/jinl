@@ -94,4 +94,17 @@ public class Function
     {
         return version;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Function)) {
+            return false;
+        }
+
+        Function other = (Function) obj;
+
+        // Block and returnType are ignored since they don't define a function firm.
+        return name.equals(other.name) && version.equals(other.version);
+    }
 }

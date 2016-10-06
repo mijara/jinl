@@ -1,5 +1,8 @@
 package com.mijara.types;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * A language type written as natural string.
  *
@@ -93,6 +96,20 @@ public class Type
         }
 
         Type other = (Type) obj;
+
         return other.representation.equals(representation);
+    }
+
+    /**
+     * Creates an array of types from varargs types for simplification.
+     *
+     * @param types types to add to the array.
+     * @return resulting array of types.
+     */
+    public static ArrayList<Type> bundle(Type... types)
+    {
+        ArrayList<Type> list = new ArrayList<>();
+        Collections.addAll(list, types);
+        return list;
     }
 }

@@ -43,7 +43,7 @@ identifier: IDENTIFIER;
 
 string: STRING;
 
-functionCall: FUNCTION_NAME '(' expression* ')';
+functionCall: FUNCTION_NAME '(' version? expression* ')';
 
 // LEXER
 END:                'End';

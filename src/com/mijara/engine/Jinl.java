@@ -3,7 +3,7 @@ package com.mijara.engine;
 import com.mijara.antlr.JinlLexer;
 import com.mijara.antlr.JinlParser;
 import com.mijara.antlr.JinlVisitorImpl;
-import com.mijara.builtins.PrintFormatBuiltInFunction;
+import com.mijara.builtins.PrintBuiltInFunction;
 import com.mijara.exceptions.JinlInterpreterError;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -27,7 +27,7 @@ public abstract class Jinl
     {
         Context context = load(file);
 
-        return context.executeFunction("Main").getValue();
+        return context.executeFunction("Main", null, null).getValue();
     }
 
     /**
@@ -78,6 +78,6 @@ public abstract class Jinl
      */
     public static void loadBuiltIns(Context context)
     {
-        context.addFunction(new PrintFormatBuiltInFunction());
+        context.addFunction(new PrintBuiltInFunction());
     }
 }

@@ -5,6 +5,8 @@ import com.mijara.engine.Context;
 import com.mijara.engine.Value;
 import com.mijara.types.Type;
 
+import java.util.ArrayList;
+
 /**
  * See {@link Walker}.
  *
@@ -59,7 +61,7 @@ public class ExpressionWalker extends Walker
             values[i] = node.getArguments().get(i).accept(this);
         }
 
-        return getContext().executeFunction(node.getFunctionName(), values);
+        return getContext().executeFunction(node.getFunctionName(), node.getVersion(), values);
     }
 
     /**

@@ -22,13 +22,13 @@ public class ANTLRParserTests
 
         Function function;
 
-        function = context.getFunction("F1");
+        function = context.getFunction("F1", null);
         Assert.assertEquals(1, function.getParameters().size());
 
-        function = context.getFunction("F2");
+        function = context.getFunction("F2", null);
         Assert.assertEquals(3, function.getParameters().size());
 
-        function = context.getFunction("Main");
+        function = context.getFunction("Main", null);
         Assert.assertEquals(0, function.getParameters().size());
     }
 
@@ -37,7 +37,7 @@ public class ANTLRParserTests
     {
         Context context = Jinl.load(new File("input/testFunctionParams.jinl"));
 
-        Function function = context.getFunction("Main");
+        Function function = context.getFunction("Main", null);
         ArrayList<Parameter> parameters = function.getParameters();
         Assert.assertEquals(1, parameters.size());
 
@@ -49,7 +49,7 @@ public class ANTLRParserTests
     {
         Context context = Jinl.load(new File("input/testFunctionVersion.jinl"));
 
-        Function function = context.getFunction("Main");
+        Function function = context.getFunction("Main", null);
         Assert.assertEquals("test", function.getVersion());
     }
 
@@ -58,7 +58,7 @@ public class ANTLRParserTests
     {
         Context context = Jinl.load(new File("input/testString.jinl"));
 
-        Function function = context.getFunction("Main");
+        Function function = context.getFunction("Main", null);
         Return returnStatement = (Return) function.getBlock().getStatements().get(0);
 
         Assert.assertNotNull(returnStatement.getExpression());

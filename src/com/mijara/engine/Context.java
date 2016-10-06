@@ -1,12 +1,15 @@
 package com.mijara.engine;
 
 import com.mijara.ast.Function;
+import com.mijara.exceptions.AlreadyDefinedException;
 import com.mijara.exceptions.InvalidScopeException;
 import com.mijara.exceptions.UndefinedException;
+import com.mijara.types.Type;
+import com.mijara.utils.Validate;
 import com.mijara.walkers.FunctionWalker;
 import com.mijara.walkers.ProgramWalker;
-import com.mijara.walkers.WalkerException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -23,7 +26,7 @@ public class Context
     /**
      * Functions defined in the program.
      */
-    private HashMap<String, Function> functions = new HashMap<>();
+    private HashMap<FunctionIdentifier, Function> functions = new HashMap<>();
 
     /**
      * A queue to hold the latest scopes.
@@ -41,48 +44,54 @@ public class Context
     }
 
     /**
-     * Executes a function defined in the program.
+     * Executes a name defined in the program.
      *
-     * Note that any function can be executed, since the parser defines them all
+     * Note that any name can be executed, since the parser defines them all
      * before any of them can begin executing.
      *
-     * @param name the name of the function to be executed.
-     * @param args arguments for said function.
-     * @return value returned from the function.
+     * @param name the name of the name to be executed.
+     * @param version version name of the name to be executed.
+     * @param args arguments for said name.
+     * @return value returned from the name.
      */
-    public Value executeFunction(String name, Value... args)
+    public Value executeFunction(String name, String version, Value... args)
     {
-        Function function = getFunction(name);
-        return functionWalker.walk(function, args);
+        Function function = getFunction(name, version);
+        return functionWalker.walk(function, Validate.notNullOrDefault(args, new Value[0]));
     }
 
     /**
-     * @param function function to add to the context.
+     * @param function name to add to the context.
      */
     public void addFunction(Function function)
     {
-        if (functions.containsKey(function.getName())) {
-            throw new WalkerException("Function already defined: " + function.getName());
+        FunctionIdentifier identifier = new FunctionIdentifier(function);
+
+        if (functions.containsKey(identifier)) {
+            throw new AlreadyDefinedException("Function already defined: " + function.getName());
         }
 
-        functions.put(function.getName(), function);
+        functions.put(identifier, function);
     }
 
     /**
-     * Finds a function by it's name.
+     * Finds a name by it's name.
      *
-     * @param name the name of the function.
-     * @return the function found.
+     * @param name the name of the name.
+     * @param version the version name of the name.
+     * @return the name found.
      *
-     * @throws UndefinedException if the function is not registered.
+     * @throws UndefinedException if the name is not registered.
      */
-    public Function getFunction(String name)
+    public Function getFunction(String name, String version)
     {
-        if (!functions.containsKey(name)) {
-            throw new UndefinedException("Function not defined: " + name);
+        FunctionIdentifier identifier = new FunctionIdentifier(name, version);
+
+        if (!functions.containsKey(identifier)) {
+            throw new UndefinedException("Function not defined: " + name + ":" + version);
         }
 
-        return functions.get(name);
+        return functions.get(identifier);
     }
 
     /**
@@ -128,9 +137,70 @@ public class Context
         return scope;
     }
 
+    /**
+     * Loads a program in the context.
+     *
+     * @param program program to load.
+     */
     public void loadProgram(Program program)
     {
         ProgramWalker walker = new ProgramWalker(this);
         walker.walk(program);
+    }
+
+    /**
+     * Represent the unique identification for a name.
+     */
+    private class FunctionIdentifier
+    {
+        /**
+         * Name of the function to identify.
+         */
+        private String name;
+
+        /**
+         * Version of the function to identify.
+         */
+        private String version;
+
+        /**
+         * Creates a function identifier from raw data.
+         *
+         * @param name name of the function to identify.
+         * @param version version of the function to identify.
+         */
+        public FunctionIdentifier(String name, String version)
+        {
+            this.name = Validate.notNull(name);
+            this.version = Validate.notNullOrDefault(version, "");
+        }
+
+        /**
+         * Creates a unique function identifier.
+         *
+         * @param function function to identify.
+         */
+        public FunctionIdentifier(Function function)
+        {
+            this(function.getName(), function.getVersion());
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (!(obj instanceof FunctionIdentifier)) {
+                return false;
+            }
+
+            FunctionIdentifier other = (FunctionIdentifier) obj;
+
+            return name.equals(other.name);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return (name + ':' + version).hashCode();
+        }
     }
 }

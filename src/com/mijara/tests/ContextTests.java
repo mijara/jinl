@@ -1,10 +1,11 @@
 package com.mijara.tests;
 
 import com.mijara.ast.*;
-import com.mijara.builtins.PrintFormatBuiltInFunction;
+import com.mijara.builtins.PrintBuiltInFunction;
 import com.mijara.engine.Context;
 import com.mijara.engine.Program;
 import com.mijara.engine.Value;
+import com.mijara.exceptions.AlreadyDefinedException;
 import com.mijara.types.Type;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,13 +32,13 @@ public class ContextTests
         Context context = new Context();
         context.loadProgram(program);
 
-        context.executeFunction("Main", new Value(Type.getIntType(), 5));
+        context.executeFunction("Main", null, null, new Value(Type.getIntType(), 5));
     }
 
     @Test
     public void testBuiltIn()
     {
-        BuiltInFunction function = new PrintFormatBuiltInFunction();
+        BuiltInFunction function = new PrintBuiltInFunction();
 
         Context context = new Context();
         context.addFunction(function);
@@ -45,10 +46,26 @@ public class ContextTests
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        context.executeFunction("Print", new Value(Type.getIntType(), 10));
+        context.executeFunction("Print", "format", null, new Value(Type.getIntType(), 10));
 
         System.setOut(null);
 
         Assert.assertEquals("10\n", outContent.toString());
+    }
+
+    @Test(expected = AlreadyDefinedException.class)
+    public void testFunctionIdentifierRepeated()
+    {
+        Context context = new Context();
+        context.addFunction(new Function("Main", null, null, null, new Block()));
+        context.addFunction(new Function("Main", null, null, null, new Block()));
+    }
+
+    @Test
+    public void testFunctionIdentifier()
+    {
+        Context context = new Context();
+        context.addFunction(new Function("Main", "first", null, null, new Block()));
+        context.addFunction(new Function("Main", "second", null, null, new Block()));
     }
 }
