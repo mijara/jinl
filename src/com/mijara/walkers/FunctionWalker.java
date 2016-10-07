@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 /**
  * See {@link Walker}.
- *
+ * <p>
  * Walker for function definitions.
  *
  * @author mijara
@@ -35,26 +35,34 @@ public class FunctionWalker extends Walker
         blockWalker = new BlockWalker(context);
     }
 
-    public Value walk(BuiltInFunction node, Value... args)
+    /**
+     * Calls a builtin function passing some arguments to it.
+     *
+     * @param function the builtin function.
+     * @param args     arguments to pass to the function.
+     * @return the returned value from the function.
+     */
+    public Value walk(BuiltInFunction function, Value... args)
     {
-        assert node.getParameters().size() == args.length :
+        assert function.getParameters().size() == args.length :
                 String.format("BuiltIn function receives %d parameters, but got %s",
-                        node.getParameters().size(), args.length);
+                        function.getParameters().size(), args.length);
 
         // create the map with all values.
-        HashMap<String, Object> values = new HashMap<>();
+        Object[] values = new Object[function.getParameters().size()];
         for (int i = 0; i < args.length; i++) {
-            Parameter parameter = node.getParameters().get(i);
-            assert args[i].getType().equals(parameter.getType()) : "Parameter type mismatch.";
-            values.put(parameter.getName(), args[i].getValue());
+            assert args[i].getType().equals(function.getParameters().get(i).getType()) :
+                    "Parameter type mismatch.";
+
+            values[i] = args[i].getValue();
         }
 
-        // FIXME: check return internal representation is valid for type.
-        return new Value(node.getReturnType(), node.call(values));
+        return new Value(function.getReturnType(), function.call(values));
     }
 
     /**
-     * Executes the walk steps for function definitions.
+     * Walks through a function node, pushing parameters and blocks to a newly created scope,
+     * it passes all values given to those parameters in scope.
      *
      * @param node the node to walk through.
      * @param args arguments to execute the function with.

@@ -1,5 +1,7 @@
 package com.mijara.types;
 
+import com.mijara.exceptions.TypeMismatchError;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -111,5 +113,32 @@ public class Type
         ArrayList<Type> list = new ArrayList<>();
         Collections.addAll(list, types);
         return list;
+    }
+
+    /**
+     * Checks the value is valid for the this type.
+     *
+     * @param value value to be tested.
+     * @return true if the value is valid.
+     */
+    public boolean validate(Object value)
+    {
+        if (this.equals(floatType)) {
+            return value instanceof Float;
+        }
+
+        if (this.equals(intType)) {
+            return value instanceof Integer;
+        }
+
+        if (this.equals(stringType)) {
+            return value instanceof String;
+        }
+
+        if (this.equals(voidType)) {
+            return value instanceof Void || value == null;
+        }
+
+        throw new TypeMismatchError("Unknown value type: " + value.getClass().getSimpleName());
     }
 }

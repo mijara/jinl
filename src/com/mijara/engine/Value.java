@@ -1,6 +1,7 @@
 package com.mijara.engine;
 
 import com.mijara.exceptions.JinlInterpreterError;
+import com.mijara.exceptions.TypeMismatchError;
 import com.mijara.types.Type;
 
 /**
@@ -28,7 +29,8 @@ public class Value
     public Value(Type type, Object value)
     {
         this.type = type;
-        this.value = value;
+
+        setRawValue(value);
     }
 
     /**
@@ -52,6 +54,11 @@ public class Value
      */
     public void setRawValue(Object value)
     {
+        // check raw value is valid for type.
+        if (!type.validate(value)) {
+            throw new TypeMismatchError("Value is not valid for type " + type);
+        }
+
         this.value = value;
     }
 

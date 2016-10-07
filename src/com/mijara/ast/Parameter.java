@@ -3,6 +3,8 @@ package com.mijara.ast;
 import com.mijara.types.Type;
 import com.mijara.utils.Validate;
 
+import java.util.ArrayList;
+
 /**
  * A parameter of some function declaration. It usually belongs in a list.
  */
@@ -44,6 +46,12 @@ public class Parameter
     public String getName()
     {
         return name;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s %s", type.toString(), name);
     }
 
     @Override

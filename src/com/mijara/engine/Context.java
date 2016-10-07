@@ -16,7 +16,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * A context describes the current state of a program interpretation.
- *
+ * <p>
  * The state is a set of the functions that are defined, structs, current scope, etc.
  *
  * @author mijara
@@ -33,6 +33,9 @@ public class Context
      */
     private LinkedBlockingDeque<Scope> scopes = new LinkedBlockingDeque<>();
 
+    /**
+     * Used to walk through user defined functions.
+     */
     private FunctionWalker functionWalker;
 
     /**
@@ -45,13 +48,13 @@ public class Context
 
     /**
      * Executes a name defined in the program.
-     *
+     * <p>
      * Note that any name can be executed, since the parser defines them all
      * before any of them can begin executing.
      *
-     * @param name the name of the name to be executed.
+     * @param name    the name of the name to be executed.
      * @param version version name of the name to be executed.
-     * @param args arguments for said name.
+     * @param args    arguments for said name.
      * @return value returned from the name.
      */
     public Value executeFunction(String name, String version, Value... args)
@@ -77,10 +80,9 @@ public class Context
     /**
      * Finds a name by it's name.
      *
-     * @param name the name of the name.
+     * @param name    the name of the name.
      * @param version the version name of the name.
      * @return the name found.
-     *
      * @throws UndefinedException if the name is not registered.
      */
     public Function getFunction(String name, String version)
@@ -109,7 +111,6 @@ public class Context
      * Removes the last scope added.
      *
      * @return the scope removed.
-     *
      * @throws InvalidScopeException if no {@link #pushScope} has been called before.
      */
     public Scope popScope()
@@ -123,7 +124,6 @@ public class Context
 
     /**
      * @return the last scope created.
-     *
      * @throws InvalidScopeException if no {@link #pushScope} has been called before.
      */
     public Scope getScope()
@@ -166,7 +166,7 @@ public class Context
         /**
          * Creates a function identifier from raw data.
          *
-         * @param name name of the function to identify.
+         * @param name    name of the function to identify.
          * @param version version of the function to identify.
          */
         public FunctionIdentifier(String name, String version)
