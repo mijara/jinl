@@ -1,3 +1,6 @@
 @Main()
-    @Print(1)
+    var name = @Scan(display; "Name: ")
+
+    @Print("Your name is: ")
+    @Print(line; name)
 End

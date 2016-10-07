@@ -3,7 +3,7 @@ package com.mijara.engine;
 import com.mijara.antlr.JinlLexer;
 import com.mijara.antlr.JinlParser;
 import com.mijara.antlr.JinlVisitorImpl;
-import com.mijara.builtins.PrintBuiltInFunction;
+import com.mijara.builtins.IoModule;
 import com.mijara.exceptions.JinlInterpreterError;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -20,14 +20,12 @@ public abstract class Jinl
      *
      * @param file main file to be executed.
      * @return the exit value of the program.
-     *
-     * @throws FileNotFoundException if the file does not exists.
      */
-    public static Object execute(File file) throws FileNotFoundException
+    public static Object execute(File file)
     {
         Context context = load(file);
 
-        return context.executeFunction("Main", null, null).getValue();
+        return context.executeFunction("Main", null).getValue();
     }
 
     /**
@@ -35,8 +33,6 @@ public abstract class Jinl
      *
      * @param file main file to be executed.
      * @return the exit value of the program.
-     *
-     * @throws FileNotFoundException if the file does not exists.
      */
     public static Context load(File file)
     {
@@ -78,6 +74,6 @@ public abstract class Jinl
      */
     public static void loadBuiltIns(Context context)
     {
-        context.addFunction(new PrintBuiltInFunction());
+        IoModule.loadAllTo(context);
     }
 }

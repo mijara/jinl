@@ -1,7 +1,7 @@
 package com.mijara.tests;
 
 import com.mijara.ast.*;
-import com.mijara.builtins.PrintBuiltInFunction;
+import com.mijara.builtins.IoModule;
 import com.mijara.engine.Context;
 import com.mijara.engine.Program;
 import com.mijara.engine.Value;
@@ -38,7 +38,7 @@ public class ContextTests
     @Test
     public void testBuiltIn()
     {
-        BuiltInFunction function = new PrintBuiltInFunction();
+        BuiltInFunction function = new IoModule.PrintLine();
 
         Context context = new Context();
         context.addFunction(function);

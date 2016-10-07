@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public abstract class BuiltInFunction extends Function
 {
     /**
-     * Creates a built in function node.
+     * Creates a builtin function.
      *
      * @param name       name of the function, must be unique.
      * @param version    version of the function, can be null for blank.
