@@ -123,6 +123,11 @@ public class Type
      */
     public boolean validate(Object value)
     {
+        if (value == null) {
+            // FIXME: is this alright?
+            return true;
+        }
+
         if (this.equals(floatType)) {
             return value instanceof Float;
         }

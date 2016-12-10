@@ -44,7 +44,7 @@ public class Scope
      * @param value the value to store in the variable.
      * @return the value passed as argument for one-liners.
      *
-     * @throws AlreadyDefinedException if the variable name is already registered in this scope.
+     * @throws UndefinedException if the variable is not registered in this scope.
      */
     public Value store(String name, Value value)
     {

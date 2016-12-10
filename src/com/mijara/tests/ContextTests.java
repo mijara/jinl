@@ -32,7 +32,7 @@ public class ContextTests
         Context context = new Context();
         context.loadProgram(program);
 
-        context.executeFunction("Main", null, null, new Value(Type.getIntType(), 5));
+        context.executeFunction("Main", null, new Value(Type.getIntType(), 5));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class ContextTests
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        context.executeFunction("Print", "format", null, new Value(Type.getIntType(), 10));
+        context.executeFunction("Print", "line", new Value(Type.getIntType(), 10));
 
         System.setOut(null);
 

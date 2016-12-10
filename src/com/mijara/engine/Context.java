@@ -29,7 +29,8 @@ public class Context
     private HashMap<FunctionIdentifier, Function> functions = new HashMap<>();
 
     /**
-     * A queue to hold the latest scopes.
+     * A stack to hold the latest scopes. This shouldn't be a Deque, but since
+     * Oracle/Sun recommends using a Deque instead of a Stack...
      */
     private LinkedBlockingDeque<Scope> scopes = new LinkedBlockingDeque<>();
 
@@ -103,7 +104,7 @@ public class Context
      */
     public Scope pushScope()
     {
-        scopes.add(new Scope());
+        scopes.addFirst(new Scope());
         return scopes.peek();
     }
 
@@ -116,7 +117,7 @@ public class Context
     public Scope popScope()
     {
         try {
-            return scopes.pop();
+            return scopes.removeFirst();
         } catch (NoSuchElementException e) {
             throw new InvalidScopeException("No scopes left in the context.");
         }

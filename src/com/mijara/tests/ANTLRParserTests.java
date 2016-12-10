@@ -49,7 +49,7 @@ public class ANTLRParserTests
     {
         Context context = Jinl.load(new File("input/testFunctionVersion.jinl"));
 
-        Function function = context.getFunction("Main", null);
+        Function function = context.getFunction("Main", "test");
         Assert.assertEquals("test", function.getVersion());
     }
 

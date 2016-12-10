@@ -1,6 +1,10 @@
-@Main()
-    var name = @Scan(display; "Name: ")
+@GetValue() : string
+    return @Scan(display; "Some Value: ")
+End
 
-    @Print("Your name is: ")
-    @Print(line; name)
+@Main()
+    var value = @GetValue()
+
+    @Print("Echo: ")
+    @Print(line; value)
 End
